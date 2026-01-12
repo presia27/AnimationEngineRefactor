@@ -14,6 +14,8 @@ const createApp = (): Express => {
 
   // Configure routes
   app.use('/', express.static('view'));
+  app.use('/assets', express.static('assets'));
+  app.use('/dist/gamescript', express.static('dist/gamescript'));
 
   return app;
 };

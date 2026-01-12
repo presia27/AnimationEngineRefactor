@@ -6,6 +6,7 @@
  */
 
 import { IEntity } from "./classinterfaces.ts";
+import { Timer } from "./timer.ts";
 
 interface mouseXY {
   x: number,
@@ -15,6 +16,8 @@ interface mouseXY {
 export default class GameEngine {
   running: boolean;
   ctx: CanvasRenderingContext2D | null;
+  timer: Timer;
+  clockTick: number; // elapsed time in seconds since the last clock tick
   entities: IEntity[];
   click: mouseXY | null;
   rightClick: mouseXY | null;
@@ -22,7 +25,7 @@ export default class GameEngine {
   wheel: WheelEvent | null;
   keys: Map<string, boolean>;
 
-  options: Object;
+  options: any;
 
   constructor(options: Object) {
     this.running = false;
@@ -30,6 +33,9 @@ export default class GameEngine {
     // What you will use to draw
     // Documentation: https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D
     this.ctx = null;
+
+    this.timer = new Timer();
+    this.clockTick = 0;
 
     // Everything that will be updated and drawn each frame
     this.entities = [];

@@ -1,14 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>psia97 Test Cat Animation</title>
 
-    <script type="module" src="js/main.js"></script>
+    <style>
+      @media (min-width: 1440px) {
+          #mainContainer {
+              display: flex;
+              flex-direction: row;
+              gap: 16px;
+          }
+      }
+    </style>
   </head>
   
-  <body>
-    
+  <body style="font-family: sans-serif;">
+     <div id="mainContainer">
+        <div>
+            <canvas id="gameWorld" width="1024" height="768" style="background: white; border: 1px solid black" tabindex="0" autofocus></canvas>
+            <div>
+                <button type="button" id="btnDebug" onclick="toggleDebug()">Toggle Debugging</button>
+            </div>
+        </div>
+        <div>
+            <h1>Sample Cat Animation</h1>
+            <p>Preston Sia (presia27), forked from Dr. Chris Marriott's (algorithm0r) <a href="https://github.com/algorithm0r/Empty--GameEngine">Empty--GameEngine repository</a></p>
+            <p>Cat sprites by "asneakylittlebe" (Ellie) on  <a href="https://www.pinterest.com/pin/86412886593184356/" target="_blank">Pinterest</a></p>
+            <p>View the source code for this project on my <a href="https://github.com/presia27/AnimationTest1">GitHub</a></p>
+            <h2>About This Animation</h2>
+            <p>
+                The original sprite sheet has about 34 animations if I counted correctly (some are still frames).
+                I've animated 8 of them corresponding to different directions of the cat sprite walking. You can
+                use the WASD keys, including combinations, to view the different animations as the cat walks across
+                the canvas.
+            </p>
+        </div>
+    </div>
+
+    <!-- Scripts to be loaded after content is loaded -->    
+    <script type="module" src="js/main.js"></script>
   </body>
 </html>

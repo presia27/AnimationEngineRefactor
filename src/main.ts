@@ -1,11 +1,14 @@
 import AssetManager from "./assetmanager.ts";
+import { catImageAssets } from "./assetlist.ts";
 
 const ASSET_MANAGER = new AssetManager();
 
-const CAT_SPRITE_LOCATION = "../../assets/CatSpriteFromPinterest.png";
-
-ASSET_MANAGER.queueDownload(CAT_SPRITE_LOCATION);
+catImageAssets.forEach((img) => {
+  ASSET_MANAGER.queueDownload(img);
+})
 
 ASSET_MANAGER.downloadAll().then(() => {
-  console.log(ASSET_MANAGER.getAsset(CAT_SPRITE_LOCATION));
+  catImageAssets.forEach((img) => {
+    ASSET_MANAGER.getAsset(img);
+  })
 })

@@ -3,7 +3,14 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>psia97 Test Cat Animation</title>
+    <title>psia97 Sample Cat Animation</title>
+
+    <!--
+    JS modules are automatically deferred (they execute after the document is parsed/loaded)
+    For scripts that are NOT modules, add the "defer" property if you need to ensure that
+    the document is loaded before script execution.
+    -->
+    <script type="module" src="js/main.js"></script>
 
     <style>
       @media (min-width: 1440px) {
@@ -37,9 +44,6 @@
                 the canvas.
             </p>
         </div>
-    </div>
-
-    <!-- Scripts to be loaded after content is loaded -->    
-    <script type="module" src="js/main.js"></script>
+      </div>
   </body>
 </html>

@@ -20,33 +20,6 @@ export default class AssetManager {
     return this.downloadQueue.length === this.successCount + this.errorCount;
   }
 
-  // async downloadAll(callback: Function) {
-  //   for (let i = 0; i < this.downloadQueue.length; i++) {
-  //     const path = this.downloadQueue[i];
-
-  //     // Perform null/undefined check
-  //     if (path === undefined || path === null) {
-  //       this.errorCount++;
-  //       continue;
-  //     }
-
-  //     try {
-  //       const response = await fetch(path);
-  //       if (!response.ok) {
-  //         this.errorCount++;
-  //         throw new Error(`Error ${response.status}`);
-  //       }
-  //       const blob = await response.blob();
-  //       console.log(blob);
-  //       this.successCount++;
-  //       this.cache.set(path, blob);
-  //     } catch (error) {
-  //       this.errorCount++;
-  //       console.error(error);
-  //     }
-  //   }
-  // };
-
   downloadAll(): Promise<void> {
     return new Promise(async (resolve) => {
       while(this.downloadQueue.length > 0) {

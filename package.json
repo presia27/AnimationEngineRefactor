@@ -23,7 +23,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
-    "start": "node dist/server.js"
+    "buildserver": "tsc -p tsconfig.server.json",
+    "start": "node srvbuild/server.js"
   },
   "dependencies": {
     "cors": "^2.8.5",

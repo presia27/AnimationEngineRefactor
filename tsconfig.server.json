@@ -1,12 +1,21 @@
 {
   "compilerOptions": {
-    /* Language and Environment */
-    "target": "es2017",
-    "outDir": "./js",
-    "rootDir": "./src",
-    "rewriteRelativeImportExtensions": true,
+    "target": "ES2022",
+    "lib": ["ES2022"],
+    "module": "CommonJS",
+    "moduleResolution": "node",
 
-    /* Type checking */
+    "outDir": "./srvbuild",
+    "rootDir": "./server",
+    "removeComments": true,
+    "sourceMap": true,
+    "declaration": true,
+    "declarationMap": true,
+
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+
     "strict": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
@@ -19,21 +28,23 @@
     "noImplicitOverride": true,
     "exactOptionalPropertyTypes": true,
 
-    /* Completeness */
     "skipLibCheck": true,
 
-    /* Path Mapping */
     "baseUrl": "./src",
+
+    "resolveJsonModule": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
   },
   "include": [
-    "src/**/*"
+    "server/**/*"
   ],
   "exclude": [
     "node_modules",
     "dist",
     "**/*.test.ts",
     "**/*.spec.ts",
-    "server",
+    "src",
     "build",
     "srvbuild",
     "js"

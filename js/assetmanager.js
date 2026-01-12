@@ -1,0 +1,74 @@
+export default class AssetManager {
+    constructor() {
+        this.successCount = 0;
+        this.errorCount = 0;
+        this.cache = new Map();
+        this.downloadQueue = [];
+    }
+    ;
+    queueDownload(path) {
+        console.log("Queueing " + path);
+        this.downloadQueue.push(path);
+    }
+    ;
+    isDone() {
+        return this.downloadQueue.length === this.successCount + this.errorCount;
+    }
+    // async downloadAll(callback: Function) {
+    //   for (let i = 0; i < this.downloadQueue.length; i++) {
+    //     const path = this.downloadQueue[i];
+    //     // Perform null/undefined check
+    //     if (path === undefined || path === null) {
+    //       this.errorCount++;
+    //       continue;
+    //     }
+    //     try {
+    //       const response = await fetch(path);
+    //       if (!response.ok) {
+    //         this.errorCount++;
+    //         throw new Error(`Error ${response.status}`);
+    //       }
+    //       const blob = await response.blob();
+    //       console.log(blob);
+    //       this.successCount++;
+    //       this.cache.set(path, blob);
+    //     } catch (error) {
+    //       this.errorCount++;
+    //       console.error(error);
+    //     }
+    //   }
+    // };
+    downloadAll() {
+        return new Promise(async (resolve) => {
+            while (this.downloadQueue.length > 0) {
+                const path = this.downloadQueue.pop();
+                // Perform null/undefined check
+                if (path === undefined || path === null) {
+                    continue;
+                }
+                try {
+                    const response = await fetch(path);
+                    if (!response.ok) {
+                        this.errorCount++;
+                        console.error(`Error ${response.status} on resource ${path}`);
+                    }
+                    else {
+                        const blob = await response.blob();
+                        console.log(blob); // debug
+                        this.successCount++;
+                        this.cache.set(path, blob);
+                    }
+                }
+                catch (error) {
+                    this.errorCount++;
+                    console.error(error);
+                }
+            }
+            resolve();
+        });
+    }
+    getAsset(path) {
+        return this.cache.get(path);
+    }
+}
+;

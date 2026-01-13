@@ -6,11 +6,11 @@
  */
 import { Timer } from "./timer.js";
 export default class GameEngine {
-    constructor(options) {
+    constructor(ctx, options) {
         this.running = false;
         // What you will use to draw
         // Documentation: https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D
-        this.ctx = null;
+        this.ctx = ctx;
         this.timer = new Timer();
         this.clockTick = 0;
         // Everything that will be updated and drawn each frame
@@ -25,11 +25,16 @@ export default class GameEngine {
         this.options = options || {
             debugging: false,
         };
+        this.startInput();
     }
     ;
+    /**
+     * Reinitialize the game engine to a new canvas
+     * @param ctx Reference to the HTML canvas 2D rendering context
+     */
     init(ctx) {
         this.ctx = ctx;
-        this.startInput(ctx);
+        this.startInput();
         this.timer = new Timer();
     }
     ;
@@ -42,41 +47,41 @@ export default class GameEngine {
         gameLoop();
     }
     ;
-    startInput(ctx) {
+    startInput() {
         // client area is the area visible on the webpage
         // The canvas boundingClientRect is the location of the canvas on the page
         const getXandY = (e) => ({
-            x: e.clientX - ctx.canvas.getBoundingClientRect().left,
-            y: e.clientY - ctx.canvas.getBoundingClientRect().top
+            x: e.clientX - this.ctx.canvas.getBoundingClientRect().left,
+            y: e.clientY - this.ctx.canvas.getBoundingClientRect().top
         });
-        ctx.canvas.addEventListener("mousemove", e => {
+        this.ctx.canvas.addEventListener("mousemove", e => {
             if (this.options.debugging) {
                 console.log("MOUSE_MOVE", getXandY(e));
             }
             this.mouse = getXandY(e);
         });
-        ctx.canvas.addEventListener("click", e => {
+        this.ctx.canvas.addEventListener("click", e => {
             if (this.options.debugging) {
                 console.log("CLICK", getXandY(e));
             }
             this.click = getXandY(e);
         });
-        ctx.canvas.addEventListener("wheel", e => {
+        this.ctx.canvas.addEventListener("wheel", e => {
             if (this.options.debugging) {
                 console.log("WHEEL", getXandY(e), e.deltaX, e.deltaY);
             }
             e.preventDefault(); // Prevent Scrolling
             this.wheel = e;
         });
-        ctx.canvas.addEventListener("contextmenu", e => {
+        this.ctx.canvas.addEventListener("contextmenu", e => {
             if (this.options.debugging) {
                 console.log("RIGHT_CLICK", getXandY(e));
             }
             e.preventDefault(); // Prevent Context Menu
             this.rightClick = getXandY(e);
         });
-        ctx.canvas.addEventListener("keydown", event => this.keys.set(event.key.toLowerCase(), true));
-        ctx.canvas.addEventListener("keyup", event => this.keys.set(event.key.toLowerCase(), false));
+        this.ctx.canvas.addEventListener("keydown", event => this.keys.set(event.key.toLowerCase(), true));
+        this.ctx.canvas.addEventListener("keyup", event => this.keys.set(event.key.toLowerCase(), false));
     }
     ;
     addEntity(entity) {

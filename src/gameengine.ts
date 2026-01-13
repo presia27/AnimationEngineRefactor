@@ -27,7 +27,7 @@ export default class GameEngine {
 
   options: any;
 
-  constructor(ctx: CanvasRenderingContext2D, options: Object) {
+  constructor(ctx: CanvasRenderingContext2D, options?: Object) {
     this.running = false;
 
     // What you will use to draw

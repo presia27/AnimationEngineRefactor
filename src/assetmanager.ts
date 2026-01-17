@@ -1,7 +1,7 @@
 export default class AssetManager {
   successCount: number;
   errorCount: number;
-  cache: Map<string, any>;
+  cache: Map<string, Blob>;
   downloadQueue: string[];
 
   constructor() {
@@ -50,7 +50,18 @@ export default class AssetManager {
     });
   }
 
-  getAsset(path: string) {
-    return this.cache.get(path);
+  /**
+   * Returns the asset blob, or a new, empty blob
+   * if the asset isn't found.
+   * @param path Path of the image
+   * @returns A blob object
+   */
+  getAsset(path: string): Blob {
+    const cacheData = this.cache.get(path);
+    if (cacheData === undefined) {
+      return new Blob();
+    } else {
+      return cacheData;
+    }
   }
 };

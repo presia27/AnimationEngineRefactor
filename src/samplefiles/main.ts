@@ -2,6 +2,7 @@ import AssetManager from "../assetmanager.ts";
 import GameEngine from "../gameengine.ts";
 import { catImageAssets } from "./assetlist.ts";
 import { myInputMap } from "./inputmap.ts";
+import { Cat } from "./catEntity.ts";
 
 const canvas: HTMLCanvasElement = document.getElementById("gameWorld") as HTMLCanvasElement;
 const ctx = canvas?.getContext("2d");
@@ -22,6 +23,9 @@ ASSET_MANAGER.downloadAll().then(() => {
   // catImageAssets.forEach((img) => {
   //   ASSET_MANAGER.getAsset(img);
   // });
+  gameEngine.addEntity(new Cat(ASSET_MANAGER, gameEngine.getGameContext, gameEngine.getInputSystem, {x: 64, y: 64}))
+
+  gameEngine.start();
 });
 
 document.getElementById("btnDebug")?.addEventListener("click", () => {

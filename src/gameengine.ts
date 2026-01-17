@@ -88,7 +88,7 @@ export default class GameEngine {
         let entity = this.entities[i];
 
         if (entity && !entity.removeFromWorld) {
-            entity.update();
+            entity.update(this.getGameContext);
         }
     }
 

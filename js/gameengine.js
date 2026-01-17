@@ -67,7 +67,7 @@ export default class GameEngine {
         for (let i = 0; i < entitiesCount; i++) {
             let entity = this.entities[i];
             if (entity && !entity.removeFromWorld) {
-                entity.update();
+                entity.update(this.getGameContext);
             }
         }
         for (let i = this.entities.length - 1; i >= 0; --i) {
@@ -86,6 +86,15 @@ export default class GameEngine {
     toggleDebugging() {
         this.options.debugging = !this.options.debugging;
         this.inputSystem.debugState = this.options.debugging;
+    }
+    get getGameContext() {
+        return {
+            clockTick: this.clockTick,
+            ctx: this.ctx
+        };
+    }
+    get getInputSystem() {
+        return this.inputSystem;
     }
 }
 ;

@@ -14,6 +14,8 @@ export class CatInputSystem implements IUpdatable {
   }
 
   update(context: GameContext) {
+    this.movementSystem.update(context); // update the movement system
+
     const direction: XY = { x: 0, y: 0 };
 
     if (this.inputSystem.isActionActive(InputAction.MOVE_UP)) {

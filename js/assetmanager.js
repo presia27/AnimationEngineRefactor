@@ -43,8 +43,20 @@ export default class AssetManager {
             resolve();
         });
     }
+    /**
+     * Returns the asset blob, or a new, empty blob
+     * if the asset isn't found.
+     * @param path Path of the image
+     * @returns A blob object
+     */
     getAsset(path) {
-        return this.cache.get(path);
+        const cacheData = this.cache.get(path);
+        if (cacheData === undefined) {
+            return new Blob();
+        }
+        else {
+            return cacheData;
+        }
     }
 }
 ;

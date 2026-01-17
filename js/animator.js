@@ -1,5 +1,4 @@
-"use strict";
-class Animator {
+export class Animator {
     /**
      *
      * @param {HTMLImageElement} spritesheet Spritesheet image

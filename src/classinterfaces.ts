@@ -1,5 +1,5 @@
 export interface IEntity {
-  update(): void;
+  update(context: GameContext): void;
   draw(ctx: CanvasRenderingContext2D): void;
   removeFromWorld: boolean;
 }

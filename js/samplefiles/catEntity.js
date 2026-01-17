@@ -41,6 +41,7 @@ export class Cat {
     update(context) {
         this.gameContext = context;
         this.catInputSystem.update(context);
+        console.log(this.movementController.getCurrentDirection());
     }
     draw(ctx) {
         var _a;

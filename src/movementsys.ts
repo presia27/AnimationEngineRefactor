@@ -47,4 +47,18 @@ export class MovementSystem implements IUpdatable {
       y: this.velocity.y / magnitude
     }
   }
+
+  /**
+   * Return a direction in radians
+   */
+  public getCurrentDirectionRadians(): number {
+    return Math.atan2(this.velocity.y, this.velocity.x);
+  }
+
+  /**
+   * Return a direction in degrees
+   */
+  public getCurrentDirectionDegrees(): number {
+    return this.getCurrentDirectionRadians() * (180 / Math.PI);
+  }
 }

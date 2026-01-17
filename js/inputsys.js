@@ -2,15 +2,76 @@
  * Reads input from peripheral devices
  */
 export class InputSystem {
-    constructor(ctx, debug) {
+    constructor(ctx, inputMap, debug) {
         this.ctx = ctx;
         this.debug = debug;
         this.leftClick = null;
         this.rightClick = null;
         this.cursor = null;
         this.wheel = null;
-        this.keys = new Map();
+        this.keyStates = new Map();
+        this.keyBindings = new Map();
+        // initialize keybindings
+        inputMap.filter((item) => item.type === "key")
+            .forEach((filteredItem) => this.keyBindings.set(filteredItem.value, filteredItem.action));
         this.startInput();
+    }
+    handleKeyDown(key) {
+        const state = this.keyStates.get(key) || { isPressed: false, justPressed: false, justReleased: false };
+        if (!state.isPressed) {
+            state.justPressed = true;
+        }
+        state.isPressed = true;
+        state.justReleased = false;
+        this.keyStates.set(key, state);
+    }
+    handleKeyUp(key) {
+        const state = this.keyStates.get(key) || { isPressed: false, justPressed: false, justReleased: false };
+        state.isPressed = false;
+        state.justPressed = false;
+        state.justReleased = true;
+        this.keyStates.set(key, state);
+    }
+    onFrameUpdate() {
+        // Clear just-pressed and just-released flags each frame
+        this.keyStates.forEach((state) => {
+            state.justPressed = false;
+            state.justReleased = false;
+        });
+    }
+    /**
+     * Query whether an action is present based on current peripheral input.
+     * Use this for continuous input.
+     *
+     * @param action InputAction parameter, indicating an action state to query.
+     * @returns Boolean of whether that action is currently being communicated by the user.
+     */
+    isActionActive(action) {
+        for (const [key, boundAction] of this.keyBindings) {
+            if (boundAction === action) {
+                const currentState = this.keyStates.get(key);
+                return (currentState === null || currentState === void 0 ? void 0 : currentState.isPressed) || false;
+            }
+        }
+        return false;
+    }
+    /**
+     * Query whether an action is present based on current peripheral input.
+     * Use this for non-continuous input, such as when something should happen
+     * only once with a key press, mouse click, etc. If a key is held down, it
+     * will only be registered once.
+     *
+     * @param action InputAction parameter, indicating the action state to query.
+     * @returns Boolean of whether the action is currently being communicated by the user.
+     */
+    isActionActiveSingle(action) {
+        for (const [key, boundAction] of this.keyBindings) {
+            if (boundAction === action) {
+                const state = this.keyStates.get(key);
+                return (state === null || state === void 0 ? void 0 : state.justPressed) || false;
+            }
+        }
+        return false;
     }
     startInput() {
         const getXandY = (e) => ({
@@ -43,8 +104,8 @@ export class InputSystem {
             e.preventDefault(); // Prevent Context Menu
             this.rightClick = getXandY(e);
         });
-        this.ctx.canvas.addEventListener("keydown", event => this.keys.set(event.key.toLowerCase(), true));
-        this.ctx.canvas.addEventListener("keyup", event => this.keys.set(event.key.toLowerCase(), false));
+        this.ctx.canvas.addEventListener("keydown", event => this.handleKeyDown(event.key.toLowerCase()));
+        this.ctx.canvas.addEventListener("keyup", event => this.handleKeyUp(event.key.toLowerCase()));
     }
     set debugState(dbg) {
         this.debug = dbg;

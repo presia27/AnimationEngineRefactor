@@ -5,7 +5,7 @@
  * @author Preston Sia, KV Le, Chris Marriott, Seth Ladd
  */
 
-import { IEntity } from "./classinterfaces.ts";
+import { GameContext, IEntity } from "./classinterfaces.ts";
 import { Timer } from "./timer.ts";
 import { InputSystem } from "./inputsys.ts";
 import { InputMapValue } from "./typeinterfaces.ts";
@@ -108,6 +108,17 @@ export default class GameEngine {
   toggleDebugging() {
     this.options.debugging = !this.options.debugging;
     this.inputSystem.debugState = this.options.debugging;
+  }
+
+  get getGameContext(): GameContext {
+    return {
+      clockTick: this.clockTick,
+      ctx: this.ctx
+    }
+  }
+
+  get getInputSystem(): InputSystem {
+    return this.inputSystem;
   }
 
 };

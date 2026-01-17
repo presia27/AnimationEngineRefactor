@@ -1,3 +1,5 @@
-export const catImageAssets: string[] = [
-  "../../../assets/CatSpriteFromPinterest.png"
+import { IAssetList } from "../typeinterfaces.ts";
+
+export const catImageAssets: IAssetList[] = [
+  { name: "catSprite", type: "spritesheet", location: "../../../assets/CatSpriteFromPinterest.png" }
 ];

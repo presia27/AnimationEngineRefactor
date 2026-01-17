@@ -1,5 +1,11 @@
 import { InputAction } from "./inputactionlist.ts";
 
+export interface IAssetList {
+  name: string;
+  type: "spritesheet" | "img" | "audio";
+  location: string;
+}
+
 export interface XY {
   x: number;
   y: number;

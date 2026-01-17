@@ -1,5 +1,5 @@
 
-class Animator {
+export class Animator {
   spritesheet: HTMLImageElement;
   xStart: number;
   yStart: number;

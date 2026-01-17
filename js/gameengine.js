@@ -7,13 +7,13 @@
 import { Timer } from "./timer.js";
 import { InputSystem } from "./inputsys.js";
 export default class GameEngine {
-    constructor(ctx, options) {
+    constructor(ctx, inputMap, options) {
         this.running = false;
         // What you will use to draw
         // Documentation: https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D
         this.ctx = ctx;
         this.timer = new Timer();
-        this.clockTick = 0;
+        this.clockTick = 0; // Game delta
         // Everything that will be updated and drawn each frame
         this.entities = [];
         // Options and the Details
@@ -21,7 +21,8 @@ export default class GameEngine {
             debugging: false,
         };
         // Start Input
-        this.inputSystem = new InputSystem(ctx, this.options.debugging);
+        this.inputMap = inputMap;
+        this.inputSystem = new InputSystem(ctx, inputMap, this.options.debugging);
     }
     ;
     /**
@@ -30,7 +31,7 @@ export default class GameEngine {
      */
     init(ctx) {
         this.ctx = ctx;
-        this.inputSystem = new InputSystem(ctx, this.options.debug);
+        this.inputSystem = new InputSystem(ctx, this.inputMap, this.options.debug);
         this.timer = new Timer();
     }
     ;
@@ -61,6 +62,7 @@ export default class GameEngine {
     ;
     update() {
         var _a;
+        this.inputSystem.onFrameUpdate();
         let entitiesCount = this.entities.length;
         for (let i = 0; i < entitiesCount; i++) {
             let entity = this.entities[i];

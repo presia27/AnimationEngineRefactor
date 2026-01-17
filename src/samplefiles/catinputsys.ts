@@ -4,7 +4,7 @@ import { InputSystem } from "../inputsys.ts";
 import { XY } from "../typeinterfaces.ts";
 import { InputAction } from "../inputactionlist.ts";
 
-class CatInputSystem implements IUpdatable {
+export class CatInputSystem implements IUpdatable {
   inputSystem: InputSystem;
   movementSystem: MovementSystem;
 

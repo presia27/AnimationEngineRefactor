@@ -13,14 +13,15 @@ if (ctx === null || ctx === undefined) {
 const gameEngine = new GameEngine(ctx, myInputMap);
 const ASSET_MANAGER = new AssetManager();
 
-catImageAssets.forEach((img) => {
-  ASSET_MANAGER.queueDownload(img);
-});
+catImageAssets.filter((asset) => asset.type === "spritesheet")
+  .forEach((img) => {
+    ASSET_MANAGER.queueDownload(img.location);
+  });
 
 ASSET_MANAGER.downloadAll().then(() => {
-  catImageAssets.forEach((img) => {
-    ASSET_MANAGER.getAsset(img);
-  });
+  // catImageAssets.forEach((img) => {
+  //   ASSET_MANAGER.getAsset(img);
+  // });
 });
 
 document.getElementById("btnDebug")?.addEventListener("click", () => {

@@ -77,6 +77,8 @@ export default class GameEngine {
   };
 
   update() {
+    this.inputSystem.onFrameUpdate();
+
     let entitiesCount = this.entities.length;
 
     for (let i = 0; i < entitiesCount; i++) {
@@ -99,6 +101,11 @@ export default class GameEngine {
     this.update();
     this.draw();
   };
+
+  toggleDebugging() {
+    this.options.debugging = !this.options.debugging;
+    this.inputSystem.debugState = this.options.debugging;
+  }
 
 };
 

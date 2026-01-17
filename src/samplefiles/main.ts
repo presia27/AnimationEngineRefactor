@@ -21,3 +21,7 @@ ASSET_MANAGER.downloadAll().then(() => {
     ASSET_MANAGER.getAsset(img);
   });
 });
+
+document.getElementById("btnDebug")?.addEventListener("click", () => {
+  gameEngine.toggleDebugging();
+})

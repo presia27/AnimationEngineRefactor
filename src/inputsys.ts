@@ -3,6 +3,20 @@ interface coordinate {
   y: number
 }
 
+enum InputAction {
+  MOVE_UP = "MOVE_UP",
+  MOVE_DOWN = "MOVE_DOWN",
+  MOVE_LEFT = "MOVE_LEFT",
+  MOVE_RIGHT = "MOVE_RIGHT",
+  INTERACT = "INTERACT",
+}
+
+interface InputState {
+  isPressed: boolean;
+  justPressed: boolean;
+  justReleased: boolean;
+}
+
 /**
  * Reads input from peripheral devices
  */
@@ -13,7 +27,8 @@ export class InputSystem {
   rightClick: coordinate | null;
   cursor: coordinate | null;
   wheel: WheelEvent | null;
-  keys: Map<string, boolean>;
+  keyStates: Map<string, InputState>;
+  keyBindings: Map<string, InputAction>;
 
   constructor(ctx: CanvasRenderingContext2D, debug: boolean) {
     this.ctx = ctx;
@@ -22,9 +37,84 @@ export class InputSystem {
     this.rightClick = null;
     this.cursor = null;
     this.wheel = null;
-    this.keys = new Map();
+    this.keyStates = new Map();
+    this.keyBindings = new Map();
 
     this.startInput();
+  }
+
+  // FIXME MOVE SOMEWHERE ELSE!
+  initializeDefaultBindings(): void {
+    this.keyBindings.set('w', InputAction.MOVE_UP);
+    this.keyBindings.set('a', InputAction.MOVE_LEFT);
+    this.keyBindings.set('s', InputAction.MOVE_DOWN);
+    this.keyBindings.set('d', InputAction.MOVE_RIGHT);
+  }
+
+  handleKeyDown(key: string): void {
+    const state = this.keyStates.get(key) || { isPressed: false, justPressed: false, justReleased: false };
+    
+    if (!state.isPressed) {
+      state.justPressed = true;
+    }
+    state.isPressed = true;
+    state.justReleased = false;
+    
+    this.keyStates.set(key, state);
+  }
+  
+  handleKeyUp(key: string): void {
+    const state = this.keyStates.get(key) || { isPressed: false, justPressed: false, justReleased: false };
+    
+    state.isPressed = false;
+    state.justPressed = false;
+    state.justReleased = true;
+    
+    this.keyStates.set(key, state);
+  }
+
+  onFrameUpdate(): void {
+    // Clear just-pressed and just-released flags each frame
+    this.keyStates.forEach((state) => {
+      state.justPressed = false;
+      state.justReleased = false;
+    });
+  }
+
+  /**
+   * Query whether an action is present based on current peripheral input.
+   * Use this for continuous input.
+   * 
+   * @param action InputAction parameter, indicating an action state to query.
+   * @returns Boolean of whether that action is currently being communicated by the user.
+   */
+  isActionActive(action: InputAction): boolean {
+    for (const [key, boundAction] of this.keyBindings) {
+      if (boundAction === action) {
+        const currentState = this.keyStates.get(key);
+        return currentState?.isPressed || false;
+      }
+    }
+    return false;
+  }
+
+  /**
+   * Query whether an action is present based on current peripheral input.
+   * Use this for non-continuous input, such as when something should happen
+   * only once with a key press, mouse click, etc. If a key is held down, it
+   * will only be registered once.
+   * 
+   * @param action InputAction parameter, indicating the action state to query.
+   * @returns Boolean of whether the action is currently being communicated by the user.
+   */
+  isActionActiveSingle(action: InputAction): boolean {
+    for (const [key, boundAction] of this.keyBindings) {
+      if (boundAction === action) {
+        const state = this.keyStates.get(key);
+        return state?.justPressed || false;
+      }
+    }
+    return false;
   }
 
   startInput() {
@@ -63,8 +153,12 @@ export class InputSystem {
       this.rightClick = getXandY(e);
     });
 
-    this.ctx.canvas.addEventListener("keydown", event => this.keys.set(event.key.toLowerCase(), true));
-    this.ctx.canvas.addEventListener("keyup", event => this.keys.set(event.key.toLowerCase(), false));
+    this.ctx.canvas.addEventListener("keydown", event => this.handleKeyDown(event.key.toLowerCase()));
+    this.ctx.canvas.addEventListener("keyup", event => this.handleKeyUp(event.key.toLowerCase()));
+  }
+
+  set debugState(dbg: boolean) {
+    this.debug = dbg;
   }
 
 }

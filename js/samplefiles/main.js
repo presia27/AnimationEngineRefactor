@@ -1,3 +1,4 @@
+var _a;
 import AssetManager from "../assetmanager.js";
 import GameEngine from "../gameengine.js";
 import { catImageAssets } from "./assetlist.js";
@@ -16,4 +17,7 @@ ASSET_MANAGER.downloadAll().then(() => {
     catImageAssets.forEach((img) => {
         ASSET_MANAGER.getAsset(img);
     });
+});
+(_a = document.getElementById("btnDebug")) === null || _a === void 0 ? void 0 : _a.addEventListener("click", () => {
+    gameEngine.toggleDebugging();
 });

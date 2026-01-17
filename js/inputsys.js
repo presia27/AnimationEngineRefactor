@@ -46,4 +46,7 @@ export class InputSystem {
         this.ctx.canvas.addEventListener("keydown", event => this.keys.set(event.key.toLowerCase(), true));
         this.ctx.canvas.addEventListener("keyup", event => this.keys.set(event.key.toLowerCase(), false));
     }
+    set debugState(dbg) {
+        this.debug = dbg;
+    }
 }

@@ -81,6 +81,10 @@ export default class GameEngine {
         this.draw();
     }
     ;
+    toggleDebugging() {
+        this.options.debugging = !this.options.debugging;
+        this.inputSystem.debugState = this.options.debugging;
+    }
 }
 ;
 // KV Le was here :)

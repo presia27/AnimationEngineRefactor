@@ -8,18 +8,20 @@
 import { IEntity } from "./classinterfaces.ts";
 import { Timer } from "./timer.ts";
 import { InputSystem } from "./inputsys.ts";
+import { InputMapValue } from "./typeinterfaces.ts";
 
 export default class GameEngine {
   running: boolean;
   ctx: CanvasRenderingContext2D;
   inputSystem: InputSystem;
+  inputMap: InputMapValue[]; // maps input values to actions
   timer: Timer;
   clockTick: number; // elapsed time in seconds since the last clock tick
   entities: IEntity[];
 
   options: any;
 
-  constructor(ctx: CanvasRenderingContext2D, options?: Object) {
+  constructor(ctx: CanvasRenderingContext2D, inputMap: InputMapValue[], options?: Object) {
     this.running = false;
 
     // What you will use to draw
@@ -38,7 +40,8 @@ export default class GameEngine {
     };
 
     // Start Input
-    this.inputSystem = new InputSystem(ctx, this.options.debugging);
+    this.inputMap = inputMap;
+    this.inputSystem = new InputSystem(ctx, inputMap, this.options.debugging);
   };
 
   /**
@@ -47,7 +50,7 @@ export default class GameEngine {
    */
   init(ctx: CanvasRenderingContext2D) {
     this.ctx = ctx;
-    this.inputSystem = new InputSystem(ctx, this.options.debug);
+    this.inputSystem = new InputSystem(ctx, this.inputMap, this.options.debug);
     this.timer = new Timer();
   };
 

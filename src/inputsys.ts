@@ -1,15 +1,5 @@
-interface coordinate {
-  x: number,
-  y: number
-}
-
-enum InputAction {
-  MOVE_UP = "MOVE_UP",
-  MOVE_DOWN = "MOVE_DOWN",
-  MOVE_LEFT = "MOVE_LEFT",
-  MOVE_RIGHT = "MOVE_RIGHT",
-  INTERACT = "INTERACT",
-}
+import { InputMapValue, XY } from "./typeinterfaces.ts";
+import { InputAction } from "./inputactionlist.ts";
 
 interface InputState {
   isPressed: boolean;
@@ -23,14 +13,14 @@ interface InputState {
 export class InputSystem {
   ctx: CanvasRenderingContext2D;
   debug: boolean;
-  leftClick: coordinate | null;
-  rightClick: coordinate | null;
-  cursor: coordinate | null;
+  leftClick: XY | null;
+  rightClick: XY | null;
+  cursor: XY | null;
   wheel: WheelEvent | null;
   keyStates: Map<string, InputState>;
   keyBindings: Map<string, InputAction>;
 
-  constructor(ctx: CanvasRenderingContext2D, debug: boolean) {
+  constructor(ctx: CanvasRenderingContext2D, inputMap: InputMapValue[], debug: boolean) {
     this.ctx = ctx;
     this.debug = debug;
     this.leftClick = null;
@@ -40,15 +30,11 @@ export class InputSystem {
     this.keyStates = new Map();
     this.keyBindings = new Map();
 
-    this.startInput();
-  }
+    // initialize keybindings
+    inputMap.filter((item) => item.type === "key")
+      .forEach((filteredItem) => this.keyBindings.set(filteredItem.value, filteredItem.action));
 
-  // FIXME MOVE SOMEWHERE ELSE!
-  initializeDefaultBindings(): void {
-    this.keyBindings.set('w', InputAction.MOVE_UP);
-    this.keyBindings.set('a', InputAction.MOVE_LEFT);
-    this.keyBindings.set('s', InputAction.MOVE_DOWN);
-    this.keyBindings.set('d', InputAction.MOVE_RIGHT);
+    this.startInput();
   }
 
   handleKeyDown(key: string): void {

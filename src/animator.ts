@@ -1,19 +1,19 @@
 
 export class Animator {
-  spritesheet: HTMLImageElement;
-  xStart: number;
-  yStart: number;
-  width: number;
-  height: number;
-  frameCount: number;
-  frameDuration: number;
-  framePadding: number;
-  reverse: boolean;
-  loop: boolean;
-  flipflop: boolean;
+  private spritesheet: HTMLImageElement;
+  private xStart: number;
+  private yStart: number;
+  private width: number;
+  private height: number;
+  private frameCount: number;
+  private frameDuration: number;
+  private framePadding: number;
+  private reverse: boolean;
+  private loop: boolean;
+  private flipflop: boolean;
 
-  elapsedTime: number;  // keep track of how much time it's been since the last animation
-  totalTime: number;    // calculation of total time of the animation
+  private elapsedTime: number;  // keep track of how much time it's been since the last animation
+  private totalTime: number;    // calculation of total time of the animation
 
   /**
    * 
@@ -46,7 +46,7 @@ export class Animator {
     this.totalTime = this.frameCount * this.frameDuration;
   }
 
-  drawFrame(tick: number, ctx: CanvasRenderingContext2D, x: number, y: number, scale: number) {
+  public drawFrame(tick: number, ctx: CanvasRenderingContext2D, x: number, y: number, scale: number) {
     this.elapsedTime += tick;
 
     if (this.isDone()) {
@@ -73,7 +73,7 @@ export class Animator {
     );
   }
 
-  drawFrameWithBoundingBox(tick: number, ctx: CanvasRenderingContext2D, x: number, y: number, scale: number) {
+  public drawFrameWithBoundingBox(tick: number, ctx: CanvasRenderingContext2D, x: number, y: number, scale: number) {
     ctx.save();
     ctx.strokeStyle = "red";
     ctx.strokeRect(x, y, this.width * scale, this.height * scale);
@@ -81,11 +81,11 @@ export class Animator {
     this.drawFrame(tick, ctx, x, y, scale);
   }
 
-  currentFrame() {
+  private currentFrame() {
     return Math.floor(this.elapsedTime / this.frameDuration);
   }
 
-  isDone(): boolean {
+  private isDone(): boolean {
     return (this.elapsedTime >= this.totalTime);
   }
 }

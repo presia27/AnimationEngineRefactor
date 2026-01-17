@@ -1,30 +1,21 @@
 import { MovementSystem } from "../movementsys.js";
 import { Animator } from "../animator.js";
 import { CatInputSystem } from "./catinputsys.js";
-import { catImageAssets } from "./assetlist.js";
 const catSpeed = 200;
 const catSpriteName = "catSprite";
 export class Cat {
     constructor(assetManager, gameContext, inputSystem, defaultXY) {
-        var _a;
         this.gameContext = gameContext;
         this.movementController = new MovementSystem(defaultXY, catSpeed);
         this.catInputSystem = new CatInputSystem(inputSystem, this.movementController);
         this.animations = [];
         this.removeFromWorld = false;
         // get spritesheet
-        const imagePath = (_a = catImageAssets.find((item) => item.name === catSpriteName)) === null || _a === void 0 ? void 0 : _a.location;
-        if (imagePath === undefined) {
-            throw new Error("Unable to find asset for this entity");
+        const imageData = assetManager.getImageAsset(catSpriteName);
+        if (imageData === null) {
+            throw new Error("Failed to load the Cat Sprite");
         }
-        // set spritesheet from blob
-        const imageData = assetManager.getAsset(imagePath);
-        this.spritesheet = new Image();
-        const objectUrl = URL.createObjectURL(imageData);
-        this.spritesheet.src = objectUrl;
-        this.spritesheet.onload = () => {
-            URL.revokeObjectURL(objectUrl);
-        };
+        this.spritesheet = imageData;
         this.loadAnimations();
     }
     loadAnimations() {
@@ -41,7 +32,6 @@ export class Cat {
     update(context) {
         this.gameContext = context;
         this.catInputSystem.update(context);
-        console.log(this.movementController.getCurrentDirection());
     }
     draw(ctx) {
         var _a;

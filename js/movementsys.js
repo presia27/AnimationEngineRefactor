@@ -38,4 +38,16 @@ export class MovementSystem {
             y: this.velocity.y / magnitude
         };
     }
+    /**
+     * Return a direction in radians
+     */
+    getCurrentDirectionRadians() {
+        return Math.atan2(this.velocity.y, this.velocity.x);
+    }
+    /**
+     * Return a direction in degrees
+     */
+    getCurrentDirectionDegrees() {
+        return this.getCurrentDirectionRadians() * (180 / Math.PI);
+    }
 }

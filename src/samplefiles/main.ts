@@ -14,9 +14,9 @@ if (ctx === null || ctx === undefined) {
 const gameEngine = new GameEngine(ctx, myInputMap);
 const ASSET_MANAGER = new AssetManager();
 
-catImageAssets.filter((asset) => asset.type === "spritesheet")
+catImageAssets.filter((asset) => asset.type === "img")
   .forEach((img) => {
-    ASSET_MANAGER.queueDownload(img.location);
+    ASSET_MANAGER.queueDownload(img.id, img.type, img.location);
   });
 
 ASSET_MANAGER.downloadAll().then(() => {

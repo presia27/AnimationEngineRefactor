@@ -1,8 +1,10 @@
 import { InputAction } from "./inputactionlist.ts";
 
+export type AssetTypes = "img" | "audio" | "other";
+
 export interface IAssetList {
-  name: string;
-  type: "spritesheet" | "img" | "audio";
+  id: string;
+  type: AssetTypes;
   location: string;
 }
 

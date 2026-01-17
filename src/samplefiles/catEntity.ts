@@ -26,18 +26,11 @@ export class Cat implements IEntity {
     this.removeFromWorld = false;
 
     // get spritesheet
-    const imagePath = catImageAssets.find((item) => item.name === catSpriteName)?.location;
-    if (imagePath === undefined) {
-      throw new Error("Unable to find asset for this entity");
+    const imageData = assetManager.getImageAsset(catSpriteName);
+    if (imageData === null) {
+      throw new Error("Failed to load the Cat Sprite");
     }
-    // set spritesheet from blob
-    const imageData: Blob = assetManager.getAsset(imagePath);
-    this.spritesheet = new Image();
-    const objectUrl = URL.createObjectURL(imageData);
-    this.spritesheet.src = objectUrl;
-    this.spritesheet.onload = () => { // cleanup data
-      URL.revokeObjectURL(objectUrl);
-    }
+    this.spritesheet = imageData;
 
     this.loadAnimations();
   }

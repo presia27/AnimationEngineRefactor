@@ -1,3 +1,3 @@
 export const catImageAssets = [
-    { name: "catSprite", type: "spritesheet", location: "../../../assets/CatSpriteFromPinterest.png" }
+    { id: "catSprite", type: "img", location: "../../../assets/CatSpriteFromPinterest.png" }
 ];

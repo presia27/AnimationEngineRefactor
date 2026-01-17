@@ -27,7 +27,7 @@ export default class GameEngine {
     this.ctx = ctx;
 
     this.timer = new Timer();
-    this.clockTick = 0;
+    this.clockTick = 0; // Game delta
 
     // Everything that will be updated and drawn each frame
     this.entities = [];

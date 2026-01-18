@@ -6,9 +6,9 @@
  */
 
 export class Timer {
-  gameTime: number; // Elapsed game time in seconds
-  maxStep: number;  // specifies a maximum amount of elapsed time between each game tick
-  lastTimestamp: number;
+  private gameTime: number; // Elapsed game time in seconds
+  private maxStep: number;  // specifies a maximum amount of elapsed time between each game tick
+  private lastTimestamp: number;
 
   constructor() {
     this.gameTime = 0;
@@ -20,7 +20,7 @@ export class Timer {
    * Calculates and returns the amount of time since the last game tick up
    * to the value of maxStep.
    */
-  tick() {
+  public tick() {
     const current = Date.now();
     const delta = (current - this.lastTimestamp) / 1000; // Calculate the delta in seconds
     this.lastTimestamp = current;
@@ -34,7 +34,7 @@ export class Timer {
    * Returns the total game time in seconds.
    * @returns Game time in seconds
    */
-  getGameTime() {
+  public getGameTime() {
     return this.gameTime;
   }
 }

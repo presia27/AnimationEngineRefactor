@@ -11,14 +11,14 @@ interface InputState {
  * Reads input from peripheral devices
  */
 export class InputSystem {
-  ctx: CanvasRenderingContext2D;
-  debug: boolean;
-  leftClick: XY | null;
-  rightClick: XY | null;
-  cursor: XY | null;
-  wheel: WheelEvent | null;
-  keyStates: Map<string, InputState>;
-  keyBindings: Map<string, InputAction>;
+  private ctx: CanvasRenderingContext2D;
+  private debug: boolean;
+  private leftClick: XY | null;
+  private rightClick: XY | null;
+  private cursor: XY | null;
+  private wheel: WheelEvent | null;
+  private keyStates: Map<string, InputState>;
+  private keyBindings: Map<string, InputAction>;
 
   constructor(ctx: CanvasRenderingContext2D, inputMap: InputMapValue[], debug: boolean) {
     this.ctx = ctx;
@@ -37,7 +37,7 @@ export class InputSystem {
     this.startInput();
   }
 
-  handleKeyDown(key: string): void {
+  public handleKeyDown(key: string): void {
     const state = this.keyStates.get(key) || { isPressed: false, justPressed: false, justReleased: false };
     
     if (!state.isPressed) {
@@ -49,7 +49,7 @@ export class InputSystem {
     this.keyStates.set(key, state);
   }
   
-  handleKeyUp(key: string): void {
+  public handleKeyUp(key: string): void {
     const state = this.keyStates.get(key) || { isPressed: false, justPressed: false, justReleased: false };
     
     state.isPressed = false;
@@ -59,7 +59,7 @@ export class InputSystem {
     this.keyStates.set(key, state);
   }
 
-  onFrameUpdate(): void {
+  public onFrameUpdate(): void {
     // Clear just-pressed and just-released flags each frame
     this.keyStates.forEach((state) => {
       state.justPressed = false;
@@ -74,7 +74,7 @@ export class InputSystem {
    * @param action InputAction parameter, indicating an action state to query.
    * @returns Boolean of whether that action is currently being communicated by the user.
    */
-  isActionActive(action: InputAction): boolean {
+  public isActionActive(action: InputAction): boolean {
     for (const [key, boundAction] of this.keyBindings) {
       if (boundAction === action) {
         const currentState = this.keyStates.get(key);
@@ -93,7 +93,7 @@ export class InputSystem {
    * @param action InputAction parameter, indicating the action state to query.
    * @returns Boolean of whether the action is currently being communicated by the user.
    */
-  isActionActiveSingle(action: InputAction): boolean {
+  public isActionActiveSingle(action: InputAction): boolean {
     for (const [key, boundAction] of this.keyBindings) {
       if (boundAction === action) {
         const state = this.keyStates.get(key);
@@ -103,7 +103,7 @@ export class InputSystem {
     return false;
   }
 
-  startInput() {
+  public startInput() {
     const getXandY = (e: MouseEvent | WheelEvent | PointerEvent) => ({
       x: e.clientX - this.ctx.canvas.getBoundingClientRect().left,
       y: e.clientY - this.ctx.canvas.getBoundingClientRect().top

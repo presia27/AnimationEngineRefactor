@@ -11,15 +11,15 @@ import { InputSystem } from "./inputsys.ts";
 import { InputMapValue } from "./typeinterfaces.ts";
 
 export default class GameEngine {
-  running: boolean;
-  ctx: CanvasRenderingContext2D;
-  inputSystem: InputSystem;
-  inputMap: InputMapValue[]; // maps input values to actions
-  timer: Timer;
-  clockTick: number; // elapsed time in seconds since the last clock tick
-  entities: IEntity[];
+  private running: boolean;
+  private ctx: CanvasRenderingContext2D;
+  private inputSystem: InputSystem;
+  private inputMap: InputMapValue[]; // maps input values to actions
+  private timer: Timer;
+  private clockTick: number; // elapsed time in seconds since the last clock tick
+  private entities: IEntity[];
 
-  options: any;
+  private options: any;
 
   constructor(ctx: CanvasRenderingContext2D, inputMap: InputMapValue[], options?: Object) {
     this.running = false;
@@ -48,13 +48,13 @@ export default class GameEngine {
    * Reinitialize the game engine to a new canvas
    * @param ctx Reference to the HTML canvas 2D rendering context
    */
-  init(ctx: CanvasRenderingContext2D) {
+  public init(ctx: CanvasRenderingContext2D) {
     this.ctx = ctx;
     this.inputSystem = new InputSystem(ctx, this.inputMap, this.options.debug);
     this.timer = new Timer();
   };
 
-  start() {
+  public start() {
     this.running = true;
     const gameLoop = () => {
       this.loop();
@@ -63,11 +63,11 @@ export default class GameEngine {
     gameLoop();
   };
 
-  addEntity(entity: IEntity) {
+  public addEntity(entity: IEntity) {
     this.entities.push(entity);
   };
 
-  draw() {
+  private draw() {
     if (this.ctx !== null) {
       // Clear the whole canvas with transparent color (rgba(0, 0, 0, 0))
       this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
@@ -79,7 +79,7 @@ export default class GameEngine {
     }
   };
 
-  update() {
+  private update() {
     this.inputSystem.onFrameUpdate();
 
     let entitiesCount = this.entities.length;
@@ -88,7 +88,7 @@ export default class GameEngine {
         let entity = this.entities[i];
 
         if (entity && !entity.removeFromWorld) {
-            entity.update(this.getGameContext);
+            entity.update(this.getGameContext());
         }
     }
 
@@ -99,7 +99,7 @@ export default class GameEngine {
     }
   };
 
-  loop() {
+  private loop() {
     this.clockTick = this.timer.tick();
     this.update();
     this.draw();
@@ -110,14 +110,14 @@ export default class GameEngine {
     this.inputSystem.debugState = this.options.debugging;
   }
 
-  get getGameContext(): GameContext {
+  public getGameContext(): GameContext {
     return {
       clockTick: this.clockTick,
       ctx: this.ctx
     }
   }
 
-  get getInputSystem(): InputSystem {
+  public getInputSystem(): InputSystem {
     return this.inputSystem;
   }
 

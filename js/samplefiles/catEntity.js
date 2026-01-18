@@ -36,6 +36,6 @@ export class Cat {
     draw(ctx) {
         var _a;
         ctx.imageSmoothingEnabled = false;
-        (_a = this.animations[0]) === null || _a === void 0 ? void 0 : _a.drawFrame(this.gameContext.clockTick, ctx, this.movementController.position.x, this.movementController.position.y, 4);
+        (_a = this.animations[0]) === null || _a === void 0 ? void 0 : _a.drawFrame(this.gameContext.clockTick, ctx, this.movementController.getPosition().x, this.movementController.getPosition().y, 4);
     }
 }

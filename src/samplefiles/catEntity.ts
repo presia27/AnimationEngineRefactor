@@ -54,6 +54,6 @@ export class Cat implements IEntity {
   
   draw(ctx: CanvasRenderingContext2D) {
     ctx.imageSmoothingEnabled = false;
-    this.animations[0]?.drawFrame(this.gameContext.clockTick, ctx, this.movementController.position.x, this.movementController.position.y, 4);
+    this.animations[0]?.drawFrame(this.gameContext.clockTick, ctx, this.movementController.getPosition().x, this.movementController.getPosition().y, 4);
   }
 }

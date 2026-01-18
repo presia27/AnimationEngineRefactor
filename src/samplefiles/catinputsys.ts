@@ -35,7 +35,7 @@ export class CatInputSystem implements IUpdatable {
     if (magnitude > 0) {
       this.movementSystem.setVelocityCommand({
         direction,
-        speed: this.movementSystem.speed
+        speed: this.movementSystem.getSpeed()
       })
     } else {
       this.movementSystem.setVelocityCommand(null);

@@ -6,21 +6,21 @@ import { XY, VelocityCommand } from "./typeinterfaces.ts";
  * modified by Preston Sia (presia27)
  */
 export class MovementSystem implements IUpdatable {
-  velocity: XY = { x: 0, y: 0 };
-  position: XY;
-  speed: number;
-  velocityCommand: VelocityCommand | null = null;
+  private velocity: XY = { x: 0, y: 0 };
+  private position: XY;
+  private speed: number;
+  private velocityCommand: VelocityCommand | null = null;
 
   constructor(position: XY, speed: number = 200) {
     this.position = position;
     this.speed = speed;
   }
 
-  setVelocityCommand(command: VelocityCommand | null): void {
+  public setVelocityCommand(command: VelocityCommand | null): void {
     this.velocityCommand = command;
   }
 
-  update(context: GameContext) {
+  public update(context: GameContext) {
     if (this.velocityCommand) {
       const direction = this.velocityCommand.direction;
       const speed = this.velocityCommand.speed;
@@ -33,6 +33,18 @@ export class MovementSystem implements IUpdatable {
 
     this.position.x += this.velocity.x * context.clockTick;
     this.position.y += this.velocity.y * context.clockTick;
+  }
+
+  public getPosition(): XY {
+    return this.position;
+  }
+
+  public getVelocity(): XY {
+    return this.velocity;
+  }
+
+  public getSpeed(): number {
+    return this.speed;
   }
 
   /**

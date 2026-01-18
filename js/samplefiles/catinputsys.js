@@ -23,7 +23,7 @@ export class CatInputSystem {
         if (magnitude > 0) {
             this.movementSystem.setVelocityCommand({
                 direction,
-                speed: this.movementSystem.speed
+                speed: this.movementSystem.getSpeed()
             });
         }
         else {

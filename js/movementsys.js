@@ -26,6 +26,15 @@ export class MovementSystem {
         this.position.x += this.velocity.x * context.clockTick;
         this.position.y += this.velocity.y * context.clockTick;
     }
+    getPosition() {
+        return this.position;
+    }
+    getVelocity() {
+        return this.velocity;
+    }
+    getSpeed() {
+        return this.speed;
+    }
     /**
      * Return a direction vector
      */

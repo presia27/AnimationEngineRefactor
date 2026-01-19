@@ -26,7 +26,7 @@ ASSET_MANAGER.downloadAll().then(() => {
   // });
   //gameEngine.addEntity(new Cat(ASSET_MANAGER, gameEngine.getGameContext(), gameEngine.getInputSystem(), {x: 64, y: 64}))
 
-  gameEngine.addEntity(buildCat(ASSET_MANAGER, gameEngine.getInputSystem(), {x: 16, y: 16}))
+  gameEngine.addEntity(buildCat(ASSET_MANAGER, gameEngine.getInputSystem(), {x: 64, y: 64}))
 
   gameEngine.start();
 });

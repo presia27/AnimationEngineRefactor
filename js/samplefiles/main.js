@@ -22,7 +22,7 @@ ASSET_MANAGER.downloadAll().then(() => {
     //   ASSET_MANAGER.getAsset(img);
     // });
     //gameEngine.addEntity(new Cat(ASSET_MANAGER, gameEngine.getGameContext(), gameEngine.getInputSystem(), {x: 64, y: 64}))
-    gameEngine.addEntity(buildCat(ASSET_MANAGER, gameEngine.getInputSystem(), { x: 16, y: 16 }));
+    gameEngine.addEntity(buildCat(ASSET_MANAGER, gameEngine.getInputSystem(), { x: 64, y: 64 }));
     gameEngine.start();
 });
 (_a = document.getElementById("btnDebug")) === null || _a === void 0 ? void 0 : _a.addEventListener("click", () => {

@@ -1,6 +1,6 @@
 import { Entity } from "../../entity.js";
 import { MovementComponent } from "../../componentLibrary/movementComponent.js";
-import { CatInputSystem } from "../catinputsys.js";
+import { CatInputSystem } from "./catinputsys.js";
 import { BasicLifecycle } from "../../componentLibrary/lifecycle.js";
 import { CatRenderer } from "./catRenderer.js";
 export function buildCat(assetManager, inputSystem, defaultXY) {

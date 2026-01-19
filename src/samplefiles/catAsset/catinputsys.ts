@@ -1,8 +1,8 @@
-import { MovementComponent } from "../componentLibrary/movementComponent.ts";
-import { GameContext, IComponent } from "../classinterfaces.ts";
-import { InputSystem } from "../inputsys.ts";
-import { XY } from "../typeinterfaces.ts";
-import { InputAction } from "../inputactionlist.ts";
+import { MovementComponent } from "../../componentLibrary/movementComponent.ts";
+import { GameContext, IComponent } from "../../classinterfaces.ts";
+import { InputSystem } from "../../inputsys.ts";
+import { XY } from "../../typeinterfaces.ts";
+import { InputAction } from "../../inputactionlist.ts";
 
 export class CatInputSystem implements IComponent {
   inputSystem: InputSystem;

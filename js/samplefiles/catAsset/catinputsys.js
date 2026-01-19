@@ -1,4 +1,4 @@
-import { InputAction } from "../inputactionlist.js";
+import { InputAction } from "../../inputactionlist.js";
 export class CatInputSystem {
     constructor(inputSys, movementSys, speed) {
         this.inputSystem = inputSys;

@@ -1,6 +1,6 @@
-import { GameContext, IComponent, IRenderer, IEntity2 } from "./classinterfaces.ts";
+import { GameContext, IComponent, IRenderer, IEntity } from "./classinterfaces.ts";
 
-export class Entity implements IEntity2 {
+export class Entity implements IEntity {
   private components: IComponent[] = [];
   private renderer: IRenderer | null = null;
   private gameContext: GameContext | null = null;

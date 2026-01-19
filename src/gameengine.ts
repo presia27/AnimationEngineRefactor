@@ -9,6 +9,7 @@ import { GameContext, IEntity } from "./classinterfaces.ts";
 import { Timer } from "./timer.ts";
 import { InputSystem } from "./inputsys.ts";
 import { InputMapValue } from "./typeinterfaces.ts";
+import { BasicLifecycle } from "./componentLibrary/lifecycle.ts";
 
 export default class GameEngine {
   private running: boolean;
@@ -82,21 +83,30 @@ export default class GameEngine {
   private update() {
     this.inputSystem.onFrameUpdate();
 
-    let entitiesCount = this.entities.length;
+    // let entitiesCount = this.entities.length;
 
-    for (let i = 0; i < entitiesCount; i++) {
-        let entity = this.entities[i];
+    // for (let i = 0; i < entitiesCount; i++) {
+    //     let entity = this.entities[i];
 
-        if (entity && !entity.removeFromWorld()) {
-            entity.update(this.getGameContext());
-        }
-    }
+    //     if (entity && !entity.removeFromWorld()) {
+    //         entity.update(this.getGameContext());
+    //     }
+    // }
 
-    for (let i = this.entities.length - 1; i >= 0; --i) {
-        if (this.entities[i]?.removeFromWorld()) {
-            this.entities.splice(i, 1);
-        }
-    }
+    // for (let i = this.entities.length - 1; i >= 0; --i) {
+    //     if (this.entities[i]?.removeFromWorld()) {
+    //         this.entities.splice(i, 1);
+    //     }
+    // }
+
+    this.entities = this.entities.filter((entity) => {
+      const lifecycle = entity.getComponent(BasicLifecycle);
+      return !lifecycle || lifecycle.isAlive();
+    });
+
+    this.entities.forEach((entity) => {
+      entity.update(this.getGameContext());
+    })
   };
 
   private loop() {

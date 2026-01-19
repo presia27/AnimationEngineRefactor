@@ -1,12 +1,12 @@
 import { XY } from "./typeinterfaces.ts";
 
-export interface IEntity {
-  update(context: GameContext): void;
-  draw(ctx: CanvasRenderingContext2D): void;
-  removeFromWorld(): boolean;
-}
+// export interface IEntity {
+//   update(context: GameContext): void;
+//   draw(ctx: CanvasRenderingContext2D): void;
+//   removeFromWorld(): boolean;
+// }
 
-export interface IEntity2 {
+export interface IEntity {
   addComponent(component: IComponent): void;
   setRenderer(renderer: IRenderer): void;
   update(context: GameContext): void;

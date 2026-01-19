@@ -5,7 +5,6 @@ export class CatInputSystem {
         this.movementSystem = movementSys;
     }
     update(context) {
-        this.movementSystem.update(context); // update the movement system
         const direction = { x: 0, y: 0 };
         if (this.inputSystem.isActionActive(InputAction.MOVE_UP)) {
             direction.y -= 1;

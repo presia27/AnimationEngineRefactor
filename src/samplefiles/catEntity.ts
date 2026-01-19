@@ -15,14 +15,14 @@ export class Cat implements IEntity {
   movementController: MovementComponent;
   catInputSystem: CatInputSystem;
   animations: Animator[]; // list of animation states/frames
-  removeFromWorld: boolean;
+  alive: boolean;
 
   constructor(assetManager: AssetManager, gameContext: GameContext, inputSystem: InputSystem, defaultXY: XY) {
     this.gameContext = gameContext;
     this.movementController = new MovementComponent(defaultXY, catSpeed);
     this.catInputSystem = new CatInputSystem(inputSystem, this.movementController);
     this.animations = [];
-    this.removeFromWorld = false;
+    this.alive = false;
 
     // get spritesheet
     const imageData = assetManager.getImageAsset(catSpriteName);
@@ -54,5 +54,9 @@ export class Cat implements IEntity {
   draw(ctx: CanvasRenderingContext2D) {
     ctx.imageSmoothingEnabled = false;
     this.animations[0]?.drawFrame(this.gameContext.clockTick, ctx, this.movementController.getPosition().x, this.movementController.getPosition().y, 4);
+  }
+
+  removeFromWorld(): boolean {
+    return this.alive;
   }
 }

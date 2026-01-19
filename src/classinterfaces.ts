@@ -1,7 +1,18 @@
 export interface IEntity {
   update(context: GameContext): void;
   draw(ctx: CanvasRenderingContext2D): void;
-  removeFromWorld: boolean;
+  removeFromWorld(): boolean;
+}
+
+export interface IEntity2 {
+  addComponent(component: IComponent): void;
+  setRenderer(renderer: IRenderer): void;
+  update(context: GameContext): void;
+  draw(ctx: CanvasRenderingContext2D): void;
+}
+
+export interface IRenderer {
+  draw(ctx: CanvasRenderingContext2D): void;
 }
 
 export interface GameContext {

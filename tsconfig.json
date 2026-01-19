@@ -4,6 +4,7 @@
     "target": "es2017",
     "outDir": "./js",
     "rootDir": "./src",
+    "allowImportingTsExtensions": true,
     "rewriteRelativeImportExtensions": true,
 
     /* Type checking */

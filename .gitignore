@@ -137,7 +137,7 @@ dist/
 .pnp.*
 
 # IDE directories
-.vscode/
+# .vscode/
 .idea/
 *.swp
 *.swo

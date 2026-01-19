@@ -15,7 +15,7 @@ export class MovementComponent {
     update(context) {
         if (this.velocityCommand) {
             const direction = this.velocityCommand.direction;
-            const speed = this.velocityCommand.speed;
+            const speed = this.velocityCommand.magnitude;
             this.velocity.x = direction.x * speed;
             this.velocity.y = direction.y * speed;
         }

@@ -15,7 +15,7 @@ export interface IEntity2 {
 }
 
 export interface IRenderer {
-  draw(ctx: CanvasRenderingContext2D): void;
+  draw(ctx: CanvasRenderingContext2D, context: GameContext): void;
 }
 
 export interface GameContext {

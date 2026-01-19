@@ -26,9 +26,8 @@ export class CatInputSystem {
             direction.y = direction.y / magnitude;
             this.movementSystem.setVelocityCommand({
                 direction,
-                speed: this.movementSystem.getSpeed() + 20
+                magnitude: this.movementSystem.getSpeed()
             });
-            console.log(this.movementSystem.getSpeed());
         }
         else {
             this.movementSystem.setVelocityCommand(null);

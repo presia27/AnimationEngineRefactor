@@ -53,19 +53,23 @@ export class CatRenderer implements IRenderer {
 
   private getDirectionMap(): Direction {
     const degrees = this.movementMgr.getCurrentDirectionDegrees();
+    const speed = this.movementMgr.getSpeed();
+    if (speed === 0) return Direction.IDLE;
+    
     if (degrees >= -22.5 && degrees < 22.5) return Direction.RIGHT;
-      else if (degrees >= 22.5 && degrees < 67.5) return Direction.DOWNRIGHT;
-      else if (degrees >= 67.5 && degrees < 112.5) return Direction.DOWN;
-      else if (degrees >= 112.5 && degrees < 157.5) return Direction.DOWNLEFT;
-      else if (degrees >= 157.5 || degrees < -157.5) return Direction.LEFT;
-      else if (degrees >= -157.5 && degrees < -112.5) return Direction.UPLEFT;
-      else if (degrees >= -112.5 && degrees < -67.5) return Direction.UP;
-      else if (degrees >= -67.5 && degrees < -22.5) return Direction.UPRIGHT;
-      else return Direction.IDLE;
+    else if (degrees >= 22.5 && degrees < 67.5) return Direction.DOWNRIGHT;
+    else if (degrees >= 67.5 && degrees < 112.5) return Direction.DOWN;
+    else if (degrees >= 112.5 && degrees < 157.5) return Direction.DOWNLEFT;
+    else if (degrees >= 157.5 || degrees < -157.5) return Direction.LEFT;
+    else if (degrees >= -157.5 && degrees < -112.5) return Direction.UPLEFT;
+    else if (degrees >= -112.5 && degrees < -67.5) return Direction.UP;
+    else if (degrees >= -67.5 && degrees < -22.5) return Direction.UPRIGHT;
+    else return Direction.IDLE;
   }
 
   public draw(ctx: CanvasRenderingContext2D, context: GameContext): void {
     ctx.imageSmoothingEnabled = false;
-    this.animations[this.getDirectionMap()]?.drawFrame(context.clockTick, ctx, this.movementMgr.getPosition().x, this.movementMgr.getPosition().y, 4);
+    this.animations[this.getDirectionMap()]?.drawFrame(
+      context.clockTick, ctx, this.movementMgr.getPosition().x, this.movementMgr.getPosition().y, 4);
   }
 }

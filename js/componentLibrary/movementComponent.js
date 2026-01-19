@@ -1,5 +1,6 @@
 /**
  * Movement system, written by Claude AI and
+ * For reference, speeds are calculated as pixels per second.
  * modified by Preston Sia (presia27)
  */
 export class MovementComponent {
@@ -7,7 +8,6 @@ export class MovementComponent {
         this.velocity = { x: 0, y: 0 };
         this.velocityCommand = null;
         this.position = position;
-        this.speed = speed; // speed in pixels per second
     }
     setVelocityCommand(command) {
         this.velocityCommand = command;
@@ -33,7 +33,7 @@ export class MovementComponent {
         return this.velocity;
     }
     getSpeed() {
-        return this.speed;
+        return Math.sqrt(this.velocity.x ** 2 + this.velocity.y ** 2);
     }
     /**
      * Return a direction vector

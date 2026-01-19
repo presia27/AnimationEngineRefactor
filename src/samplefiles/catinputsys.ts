@@ -7,10 +7,12 @@ import { InputAction } from "../inputactionlist.ts";
 export class CatInputSystem implements IComponent {
   inputSystem: InputSystem;
   movementSystem: MovementComponent;
+  speed: number
 
-  constructor(inputSys: InputSystem, movementSys: MovementComponent) {
+  constructor(inputSys: InputSystem, movementSys: MovementComponent, speed: number) {
     this.inputSystem = inputSys;
     this.movementSystem = movementSys;
+    this.speed = speed;
   }
 
   update(context: GameContext) {
@@ -37,7 +39,7 @@ export class CatInputSystem implements IComponent {
 
       this.movementSystem.setVelocityCommand({
         direction,
-        magnitude: this.movementSystem.getSpeed()
+        magnitude: this.speed
       });
     } else {
       this.movementSystem.setVelocityCommand(null);

@@ -1,8 +1,9 @@
 import { InputAction } from "../inputactionlist.js";
 export class CatInputSystem {
-    constructor(inputSys, movementSys) {
+    constructor(inputSys, movementSys, speed) {
         this.inputSystem = inputSys;
         this.movementSystem = movementSys;
+        this.speed = speed;
     }
     update(context) {
         const direction = { x: 0, y: 0 };
@@ -25,7 +26,7 @@ export class CatInputSystem {
             direction.y = direction.y / magnitude;
             this.movementSystem.setVelocityCommand({
                 direction,
-                magnitude: this.movementSystem.getSpeed()
+                magnitude: this.speed
             });
         }
         else {

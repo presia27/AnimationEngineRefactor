@@ -3,17 +3,16 @@ import { XY, VelocityCommand } from "../typeinterfaces.ts";
 
 /**
  * Movement system, written by Claude AI and
+ * For reference, speeds are calculated as pixels per second.
  * modified by Preston Sia (presia27)
  */
 export class MovementComponent implements IComponent, IPosition {
   private velocity: XY = { x: 0, y: 0 };
   private position: XY;
-  private speed: number;
   private velocityCommand: VelocityCommand | null = null;
 
   constructor(position: XY, speed: number = 100) {
     this.position = position;
-    this.speed = speed; // speed in pixels per second
   }
 
   public setVelocityCommand(command: VelocityCommand | null): void {
@@ -44,7 +43,7 @@ export class MovementComponent implements IComponent, IPosition {
   }
 
   public getSpeed(): number {
-    return this.speed;
+    return Math.sqrt(this.velocity.x ** 2 + this.velocity.y ** 2);
   }
 
   /**

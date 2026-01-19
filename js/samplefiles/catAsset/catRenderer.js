@@ -38,6 +38,9 @@ export class CatRenderer {
     }
     getDirectionMap() {
         const degrees = this.movementMgr.getCurrentDirectionDegrees();
+        const speed = this.movementMgr.getSpeed();
+        if (speed === 0)
+            return Direction.IDLE;
         if (degrees >= -22.5 && degrees < 22.5)
             return Direction.RIGHT;
         else if (degrees >= 22.5 && degrees < 67.5)

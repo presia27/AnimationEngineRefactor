@@ -14,8 +14,8 @@ export function buildCat(
   defaultXY: XY): IEntity {
     const catEntity = new Entity();
     const life = new BasicLifecycle();
-    const movementCtl = new MovementComponent(defaultXY, 200);
-    const catInputCtl = new CatInputSystem(inputSystem, movementCtl);
+    const movementCtl = new MovementComponent(defaultXY);
+    const catInputCtl = new CatInputSystem(inputSystem, movementCtl, 200);
     catEntity.addComponent(life);
     catEntity.addComponent(movementCtl);
     catEntity.addComponent(catInputCtl);

@@ -1,11 +1,11 @@
-import { GameContext, IUpdatable } from "./classinterfaces.ts";
-import { XY, VelocityCommand } from "./typeinterfaces.ts";
+import { GameContext, IComponent } from "../classinterfaces.ts";
+import { XY, VelocityCommand } from "../typeinterfaces.ts";
 
 /**
  * Movement system, written by Claude AI and
  * modified by Preston Sia (presia27)
  */
-export class MovementSystem implements IUpdatable {
+export class MovementComponent implements IComponent {
   private velocity: XY = { x: 0, y: 0 };
   private position: XY;
   private speed: number;

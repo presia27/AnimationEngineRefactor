@@ -9,6 +9,6 @@ export interface GameContext {
   ctx: CanvasRenderingContext2D;
 }
 
-export interface IUpdatable {
+export interface IComponent {
   update(context: GameContext): void;
 }

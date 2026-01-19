@@ -1,10 +1,9 @@
 import { GameContext, IEntity } from "../classinterfaces.ts";
-import { MovementSystem } from "../movementsys.ts";
+import { MovementComponent } from "../componentLibrary/movementComponent.ts";
 import { Animator } from "../animator.ts"
 import { XY } from "../typeinterfaces.ts";
 import { InputSystem } from "../inputsys.ts";
 import { CatInputSystem } from "./catinputsys.ts";
-import { catImageAssets } from "./assetlist.ts";
 import AssetManager from "../assetmanager.ts";
 
 const catSpeed = 200;
@@ -13,14 +12,14 @@ const catSpriteName = "catSprite";
 export class Cat implements IEntity {
   spritesheet: HTMLImageElement;
   gameContext: GameContext;
-  movementController: MovementSystem;
+  movementController: MovementComponent;
   catInputSystem: CatInputSystem;
   animations: Animator[]; // list of animation states/frames
   removeFromWorld: boolean;
 
   constructor(assetManager: AssetManager, gameContext: GameContext, inputSystem: InputSystem, defaultXY: XY) {
     this.gameContext = gameContext;
-    this.movementController = new MovementSystem(defaultXY, catSpeed);
+    this.movementController = new MovementComponent(defaultXY, catSpeed);
     this.catInputSystem = new CatInputSystem(inputSystem, this.movementController);
     this.animations = [];
     this.removeFromWorld = false;

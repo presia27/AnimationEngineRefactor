@@ -1,14 +1,14 @@
-import { MovementSystem } from "../movementsys.ts";
-import { GameContext, IUpdatable } from "../classinterfaces.ts";
+import { MovementComponent } from "../componentLibrary/movementComponent.ts";
+import { GameContext, IComponent } from "../classinterfaces.ts";
 import { InputSystem } from "../inputsys.ts";
 import { XY } from "../typeinterfaces.ts";
 import { InputAction } from "../inputactionlist.ts";
 
-export class CatInputSystem implements IUpdatable {
+export class CatInputSystem implements IComponent {
   inputSystem: InputSystem;
-  movementSystem: MovementSystem;
+  movementSystem: MovementComponent;
 
-  constructor(inputSys: InputSystem, movementSys: MovementSystem) {
+  constructor(inputSys: InputSystem, movementSys: MovementComponent) {
     this.inputSystem = inputSys;
     this.movementSystem = movementSys;
   }

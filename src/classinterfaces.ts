@@ -11,6 +11,7 @@ export interface IEntity2 {
   setRenderer(renderer: IRenderer): void;
   update(context: GameContext): void;
   draw(ctx: CanvasRenderingContext2D): void;
+  getComponent<T extends IComponent>(component: new (...args: any[]) => T): T | undefined
 }
 
 export interface IRenderer {

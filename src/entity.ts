@@ -23,4 +23,11 @@ class Entity implements IEntity2 {
       this.renderer.draw(ctx);
     }
   }
+
+  // Originally had components: any, changed to
+  // TypeScript generic with Claude's help
+  public getComponent<T extends IComponent>(
+    component: new (...args: any[]) => T): T | undefined {
+    return this.components.find(c => c instanceof component) as T | undefined;
+  }
 }

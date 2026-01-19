@@ -15,7 +15,7 @@ export interface XY {
 
 export interface VelocityCommand {
   direction: XY;
-  speed: number;
+  magnitude: number;
 }
 
 type inputType = "key" | "mouseClick";

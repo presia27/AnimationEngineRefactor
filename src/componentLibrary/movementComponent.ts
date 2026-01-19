@@ -1,19 +1,19 @@
-import { GameContext, IComponent } from "../classinterfaces.ts";
+import { GameContext, IComponent, IPosition } from "../classinterfaces.ts";
 import { XY, VelocityCommand } from "../typeinterfaces.ts";
 
 /**
  * Movement system, written by Claude AI and
  * modified by Preston Sia (presia27)
  */
-export class MovementComponent implements IComponent {
+export class MovementComponent implements IComponent, IPosition {
   private velocity: XY = { x: 0, y: 0 };
   private position: XY;
   private speed: number;
   private velocityCommand: VelocityCommand | null = null;
 
-  constructor(position: XY, speed: number = 200) {
+  constructor(position: XY, speed: number = 100) {
     this.position = position;
-    this.speed = speed;
+    this.speed = speed; // speed in pixels per second
   }
 
   public setVelocityCommand(command: VelocityCommand | null): void {
@@ -23,7 +23,7 @@ export class MovementComponent implements IComponent {
   public update(context: GameContext) {
     if (this.velocityCommand) {
       const direction = this.velocityCommand.direction;
-      const speed = this.velocityCommand.speed;
+      const speed = this.velocityCommand.magnitude;
       this.velocity.x = direction.x * speed;
       this.velocity.y = direction.y * speed;
     } else {

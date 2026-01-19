@@ -66,12 +66,12 @@ export default class GameEngine {
         let entitiesCount = this.entities.length;
         for (let i = 0; i < entitiesCount; i++) {
             let entity = this.entities[i];
-            if (entity && !entity.removeFromWorld) {
+            if (entity && !entity.removeFromWorld()) {
                 entity.update(this.getGameContext());
             }
         }
         for (let i = this.entities.length - 1; i >= 0; --i) {
-            if ((_a = this.entities[i]) === null || _a === void 0 ? void 0 : _a.removeFromWorld) {
+            if ((_a = this.entities[i]) === null || _a === void 0 ? void 0 : _a.removeFromWorld()) {
                 this.entities.splice(i, 1);
             }
         }

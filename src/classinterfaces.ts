@@ -1,3 +1,5 @@
+import { XY } from "./typeinterfaces.ts";
+
 export interface IEntity {
   update(context: GameContext): void;
   draw(ctx: CanvasRenderingContext2D): void;
@@ -22,4 +24,14 @@ export interface GameContext {
 
 export interface IComponent {
   update(context: GameContext): void;
+}
+
+export interface IPosition {
+  getPosition(): XY;
+}
+
+export interface ILifecycle {
+  isAlive(): boolean;
+  die(): void;
+  revive(): void;
 }

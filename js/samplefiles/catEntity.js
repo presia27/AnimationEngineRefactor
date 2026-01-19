@@ -1,4 +1,4 @@
-import { MovementSystem } from "../movementsys.js";
+import { MovementComponent } from "../componentLibrary/movementComponent.js";
 import { Animator } from "../animator.js";
 import { CatInputSystem } from "./catinputsys.js";
 const catSpeed = 200;
@@ -6,10 +6,10 @@ const catSpriteName = "catSprite";
 export class Cat {
     constructor(assetManager, gameContext, inputSystem, defaultXY) {
         this.gameContext = gameContext;
-        this.movementController = new MovementSystem(defaultXY, catSpeed);
+        this.movementController = new MovementComponent(defaultXY, catSpeed);
         this.catInputSystem = new CatInputSystem(inputSystem, this.movementController);
         this.animations = [];
-        this.removeFromWorld = false;
+        this.alive = false;
         // get spritesheet
         const imageData = assetManager.getImageAsset(catSpriteName);
         if (imageData === null) {
@@ -37,5 +37,8 @@ export class Cat {
         var _a;
         ctx.imageSmoothingEnabled = false;
         (_a = this.animations[0]) === null || _a === void 0 ? void 0 : _a.drawFrame(this.gameContext.clockTick, ctx, this.movementController.getPosition().x, this.movementController.getPosition().y, 4);
+    }
+    removeFromWorld() {
+        return this.alive;
     }
 }

@@ -67,7 +67,8 @@ export class CatRenderer implements IRenderer {
     else return Direction.IDLE;
   }
 
-  public draw(ctx: CanvasRenderingContext2D, context: GameContext): void {
+  public draw(context: GameContext): void {
+    const ctx = context.ctx;
     ctx.imageSmoothingEnabled = false;
     this.animations[this.getDirectionMap()]?.drawFrame(
       context.clockTick, ctx, this.movementMgr.getPosition().x, this.movementMgr.getPosition().y, 4);

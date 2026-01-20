@@ -2,7 +2,8 @@ import { GameContext, IRenderer } from "../../classinterfaces.ts";
 
 
 export class BackgroundRenderer implements IRenderer {
-  draw(ctx: CanvasRenderingContext2D, context: GameContext): void {
+  draw(context: GameContext): void {
+    const ctx = context.ctx;
     ctx.save();
     ctx.fillStyle = "#32006e";
     ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height)

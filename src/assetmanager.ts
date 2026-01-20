@@ -1,5 +1,13 @@
 import { IAssetList, AssetTypes } from "./typeinterfaces.ts";
 
+/**
+ * Manages the assets for a game.
+ * You can download and add images, audio files,
+ * or other raw data. Image and audio assets can
+ * be obtained directly as HTML objets.
+ * 
+ * @author Preston Sia, Chris Marriott
+ */
 export default class AssetManager {
   private successCount: number;
   private errorCount: number;
@@ -18,11 +26,22 @@ export default class AssetManager {
     this.downloadQueue = [];
   };
 
+  /**
+   * Queues an asset to be downloaded
+   * 
+   * @param assetId An alphanumeric ID to name the asset
+   * @param assetType The type of file being downloaded
+   * @param path File path to the asset
+   */
   public queueDownload(assetId: string, assetType: AssetTypes, path: string): void {
     console.log(`Queing item \"${assetId}\" of type \"${assetType}\" at path \"${path}\"`);
     this.downloadQueue.push({id: assetId, type: assetType, location: path});
   };
 
+  /**
+   * Downloads all assets in the download queue
+   * @returns Promise<void> for when all assets are loaded
+   */
   public downloadAll(): Promise<void> {
     return new Promise(async (resolve) => {
       while(this.downloadQueue.length > 0) {

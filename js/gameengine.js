@@ -8,6 +8,12 @@ import { Timer } from "./timer.js";
 import { InputSystem } from "./inputsys.js";
 import { BasicLifecycle } from "./componentLibrary/lifecycle.js";
 export default class GameEngine {
+    /**
+     *
+     * @param ctx An HTML canvas element
+     * @param inputMap A user-defined map of peripheral inputs and intended action when actuated
+     * @param options Option parameters to pass to the game
+     */
     constructor(ctx, inputMap, options) {
         this.running = false;
         // What you will use to draw
@@ -36,6 +42,9 @@ export default class GameEngine {
         this.timer = new Timer();
     }
     ;
+    /**
+     * Start the game loop
+     */
     start() {
         this.running = true;
         const gameLoop = () => {
@@ -45,6 +54,10 @@ export default class GameEngine {
         gameLoop();
     }
     ;
+    /**
+     * Adds an entity to the game engine entity list
+     * @param entity Entity implementing IEntity
+     */
     addEntity(entity) {
         this.entities.push(entity);
     }
@@ -56,7 +69,7 @@ export default class GameEngine {
             this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
             // Draw latest things first
             for (let i = this.entities.length - 1; i >= 0; i--) {
-                (_a = this.entities[i]) === null || _a === void 0 ? void 0 : _a.draw(this.ctx);
+                (_a = this.entities[i]) === null || _a === void 0 ? void 0 : _a.draw(this.getGameContext());
             }
         }
     }
@@ -94,12 +107,20 @@ export default class GameEngine {
         this.options.debugging = !this.options.debugging;
         this.inputSystem.debugState = this.options.debugging;
     }
+    /**
+     * Returns an object of the latest game engine data
+     * @returns GameContext object containing the canvas and current clock tick
+     */
     getGameContext() {
         return {
             clockTick: this.clockTick,
             ctx: this.ctx
         };
     }
+    /**
+     * Returns the input system currently in use
+     * @returns InputSystem instance
+     */
     getInputSystem() {
         return this.inputSystem;
     }

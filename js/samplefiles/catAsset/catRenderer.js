@@ -60,8 +60,9 @@ export class CatRenderer {
         else
             return Direction.IDLE;
     }
-    draw(ctx, context) {
+    draw(context) {
         var _a;
+        const ctx = context.ctx;
         ctx.imageSmoothingEnabled = false;
         (_a = this.animations[this.getDirectionMap()]) === null || _a === void 0 ? void 0 : _a.drawFrame(context.clockTick, ctx, this.movementMgr.getPosition().x, this.movementMgr.getPosition().y, 4);
     }

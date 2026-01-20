@@ -1,5 +1,6 @@
 export class BackgroundRenderer {
-    draw(ctx, context) {
+    draw(context) {
+        const ctx = context.ctx;
         ctx.save();
         ctx.fillStyle = "#32006e";
         ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);

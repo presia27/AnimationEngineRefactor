@@ -16,6 +16,12 @@ export class InputSystem {
             .forEach((filteredItem) => this.keyBindings.set(filteredItem.value, filteredItem.action));
         this.startInput();
     }
+    /**
+     * Updates the key state of the given key.
+     * Set your event handler to call this method
+     * when a key is pressed down.
+     * @param key Keyboard key string value
+     */
     handleKeyDown(key) {
         const state = this.keyStates.get(key) || { isPressed: false, justPressed: false, justReleased: false };
         if (!state.isPressed) {
@@ -25,6 +31,12 @@ export class InputSystem {
         state.justReleased = false;
         this.keyStates.set(key, state);
     }
+    /**
+     * Updates the key state of the given key.
+     * Set you event handler to call this method
+     * when a key is released.
+     * @param key Keyboard key string value
+     */
     handleKeyUp(key) {
         const state = this.keyStates.get(key) || { isPressed: false, justPressed: false, justReleased: false };
         state.isPressed = false;
@@ -32,6 +44,9 @@ export class InputSystem {
         state.justReleased = true;
         this.keyStates.set(key, state);
     }
+    /**
+     * Clears certain states with each game time update
+     */
     onFrameUpdate() {
         // Clear just-pressed and just-released flags each frame
         this.keyStates.forEach((state) => {

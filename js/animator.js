@@ -1,3 +1,11 @@
+/**
+ * Animates a user-defined portion of a spritesheet.
+ * An instance of Animator can be said to contain
+ * instructions for drawing a specific series of frames
+ * that form an animation.
+ *
+ * @author Preston Sia, Chris Marriott
+ */
 export class Animator {
     /**
      *
@@ -28,6 +36,16 @@ export class Animator {
         this.elapsedTime = 0;
         this.totalTime = this.frameCount * this.frameDuration;
     }
+    /**
+     * Draw the correct frame within a sequence
+     * of frames to form an animation.
+     *
+     * @param tick Game clock tick
+     * @param ctx Reference to HTML canvas
+     * @param x x coordinate of where to draw
+     * @param y y coordinate of where to draw
+     * @param scale image scale factor
+     */
     drawFrame(tick, ctx, x, y, scale) {
         this.elapsedTime += tick;
         if (this.isDone()) {
@@ -45,6 +63,16 @@ export class Animator {
         ctx.drawImage(this.spritesheet, this.xStart + frame * (this.width + this.framePadding), this.yStart, // source from sheet
         this.width, this.height, x, y, this.width * scale, this.height * scale);
     }
+    /**
+     * Same as drawFrame, but with a bounding box around it
+     * for debugging purposes.
+     *
+     * @param tick Game clock tick
+     * @param ctx Reference to HTML canvas
+     * @param x x coordinate of where to draw
+     * @param y y coordinate of where to draw
+     * @param scale image scale factor
+     */
     drawFrameWithBoundingBox(tick, ctx, x, y, scale) {
         ctx.save();
         ctx.strokeStyle = "red";

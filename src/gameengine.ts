@@ -22,6 +22,12 @@ export default class GameEngine {
 
   private options: any;
 
+  /**
+   * 
+   * @param ctx An HTML canvas element
+   * @param inputMap A user-defined map of peripheral inputs and intended action when actuated
+   * @param options Option parameters to pass to the game
+   */
   constructor(ctx: CanvasRenderingContext2D, inputMap: InputMapValue[], options?: Object) {
     this.running = false;
 
@@ -55,6 +61,9 @@ export default class GameEngine {
     this.timer = new Timer();
   };
 
+  /**
+   * Start the game loop
+   */
   public start() {
     this.running = true;
     const gameLoop = () => {
@@ -64,6 +73,10 @@ export default class GameEngine {
     gameLoop();
   };
 
+  /**
+   * Adds an entity to the game engine entity list
+   * @param entity Entity implementing IEntity
+   */
   public addEntity(entity: IEntity) {
     this.entities.push(entity);
   };
@@ -75,7 +88,7 @@ export default class GameEngine {
 
       // Draw latest things first
       for (let i = this.entities.length - 1; i >= 0; i--) {
-        this.entities[i]?.draw(this.ctx);
+        this.entities[i]?.draw(this.getGameContext());
       }
     }
   };
@@ -120,6 +133,10 @@ export default class GameEngine {
     this.inputSystem.debugState = this.options.debugging;
   }
 
+  /**
+   * Returns an object of the latest game engine data
+   * @returns GameContext object containing the canvas and current clock tick
+   */
   public getGameContext(): GameContext {
     return {
       clockTick: this.clockTick,
@@ -127,6 +144,10 @@ export default class GameEngine {
     }
   }
 
+  /**
+   * Returns the input system currently in use
+   * @returns InputSystem instance
+   */
   public getInputSystem(): InputSystem {
     return this.inputSystem;
   }

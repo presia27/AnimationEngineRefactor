@@ -3,8 +3,8 @@ import AssetManager from "../assetmanager.js";
 import GameEngine from "../gameengine.js";
 import { catImageAssets } from "./assetlist.js";
 import { myInputMap } from "./inputmap.js";
-//import { Cat } from "./catEntity.ts";
 import { buildCat } from "./catAsset/catEntityBuilder.js";
+import { buildBackground } from "./backgroundObjects/backgroundEntityBuilder.js";
 const canvas = document.getElementById("gameWorld");
 const ctx = canvas === null || canvas === void 0 ? void 0 : canvas.getContext("2d");
 if (ctx === null || ctx === undefined) {
@@ -23,6 +23,7 @@ ASSET_MANAGER.downloadAll().then(() => {
     // });
     //gameEngine.addEntity(new Cat(ASSET_MANAGER, gameEngine.getGameContext(), gameEngine.getInputSystem(), {x: 64, y: 64}))
     gameEngine.addEntity(buildCat(ASSET_MANAGER, gameEngine.getInputSystem(), { x: 64, y: 64 }));
+    gameEngine.addEntity(buildBackground());
     gameEngine.start();
 });
 (_a = document.getElementById("btnDebug")) === null || _a === void 0 ? void 0 : _a.addEventListener("click", () => {

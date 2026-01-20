@@ -1,4 +1,4 @@
-import { GameContext, IEntity } from "../../classinterfaces.ts";
+import { IEntity } from "../../classinterfaces.ts";
 import AssetManager from "../../assetmanager.ts";
 import { InputSystem } from "../../inputsys.ts";
 import { XY } from "../../typeinterfaces.ts";

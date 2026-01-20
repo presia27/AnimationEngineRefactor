@@ -19,7 +19,7 @@ export function buildCat(
     const catEntity = new Entity();
     const life = new BasicLifecycle();
     const movementCtl = new MovementComponent(defaultXY);
-    const sizeComponent = new BasicSize(25, 25); // FIXME use a dynamic version instead
+    const sizeComponent = new BasicSize(25, 25, 4); // FIXME use a dynamic version instead
     const boundingBox = new BoundingBox(movementCtl, sizeComponent);
     const catInputCtl = new CatInputSystem(inputSystem, movementCtl, 200);
     const catWrapAroundCtl = new CatWrapAround(movementCtl, ctx);
@@ -30,7 +30,7 @@ export function buildCat(
     catEntity.addComponent(catInputCtl);
     catEntity.addComponent(catWrapAroundCtl);
 
-    const renderer = new CatRenderer(assetManager, movementCtl, life);
+    const renderer = new CatRenderer(assetManager, movementCtl, life, sizeComponent);
     catEntity.setRenderer(renderer);
 
     return catEntity;

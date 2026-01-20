@@ -13,9 +13,10 @@ var Direction;
     Direction[Direction["DOWNRIGHT"] = 8] = "DOWNRIGHT";
 })(Direction || (Direction = {}));
 export class CatRenderer {
-    constructor(assetManager, movementMgr, lifeMgr) {
+    constructor(assetManager, movementMgr, lifeMgr, size) {
         this.movementMgr = movementMgr;
         this.lifeMgr = lifeMgr;
+        this.size = size;
         this.animations = [];
         // get spritesheet
         const imageData = assetManager.getImageAsset(catSpriteName);
@@ -64,6 +65,12 @@ export class CatRenderer {
         var _a;
         const ctx = context.ctx;
         ctx.imageSmoothingEnabled = false;
-        (_a = this.animations[this.getDirectionMap()]) === null || _a === void 0 ? void 0 : _a.drawFrame(context.clockTick, ctx, this.movementMgr.getPosition().x, this.movementMgr.getPosition().y, 4);
+        (_a = this.animations[this.getDirectionMap()]) === null || _a === void 0 ? void 0 : _a.drawFrame(context.clockTick, ctx, this.movementMgr.getPosition().x, this.movementMgr.getPosition().y, this.size.getScale());
+        if (context.debug) {
+            ctx.save();
+            ctx.strokeStyle = "#ff0000";
+            ctx.strokeRect(this.movementMgr.getPosition().x, this.movementMgr.getPosition().y, this.size.getWidth(), this.size.getHeight());
+            ctx.restore();
+        }
     }
 }

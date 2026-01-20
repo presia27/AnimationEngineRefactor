@@ -7,15 +7,22 @@ import { GameContext, IComponent, ISize } from "../classinterfaces";
  * on the canvas space.
  */
 export class BasicSize implements IComponent, ISize {
+  scale: number;
   width: number;
   height: number;
 
-  constructor(width: number, height: number) {
-    this.width = width;
-    this.height = height;
+  constructor(width: number, height: number, scale: number) {
+    this.scale = scale;
+    this.width = width * scale;
+    this.height = height * scale;
   }
+
   update(context: GameContext): void {
     return;
+  }
+
+  getScale(): number {
+    return this.scale;
   }
 
   getWidth(): number {

@@ -5,12 +5,16 @@
  * on the canvas space.
  */
 export class BasicSize {
-    constructor(width, height) {
-        this.width = width;
-        this.height = height;
+    constructor(width, height, scale) {
+        this.scale = scale;
+        this.width = width * scale;
+        this.height = height * scale;
     }
     update(context) {
         return;
+    }
+    getScale() {
+        return this.scale;
     }
     getWidth() {
         return this.width;

@@ -9,6 +9,10 @@ export class BlueBoxRenderer {
         ctx.save();
         ctx.fillStyle = this.color.getColor();
         ctx.fillRect(this.positionMgr.getPosition().x, this.positionMgr.getPosition().y, this.sizeMgr.getWidth(), this.sizeMgr.getHeight());
+        if (context.debug) {
+            ctx.strokeStyle = "#ff0000";
+            ctx.strokeRect(this.positionMgr.getPosition().x, this.positionMgr.getPosition().y, this.sizeMgr.getWidth(), this.sizeMgr.getHeight());
+        }
         ctx.restore();
     }
 }

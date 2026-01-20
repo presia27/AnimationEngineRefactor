@@ -1,6 +1,6 @@
 import { MovementComponent } from "../../componentLibrary/movementComponent.ts";
 import { Animator } from "../../animator.ts";
-import { GameContext, IRenderer } from "../../classinterfaces.ts";
+import { GameContext, IRenderer, ISize } from "../../classinterfaces.ts";
 import { BasicLifecycle } from "../../componentLibrary/lifecycle.ts";
 import AssetManager from "../../assetmanager.ts";
 
@@ -23,10 +23,12 @@ export class CatRenderer implements IRenderer {
   animations: Animator[];
   movementMgr: MovementComponent;
   lifeMgr: BasicLifecycle;
+  size: ISize;
 
-  constructor(assetManager: AssetManager, movementMgr: MovementComponent, lifeMgr: BasicLifecycle) {
+  constructor(assetManager: AssetManager, movementMgr: MovementComponent, lifeMgr: BasicLifecycle, size: ISize) {
     this.movementMgr = movementMgr;
     this.lifeMgr = lifeMgr;
+    this.size = size;
     this.animations = [];
 
     // get spritesheet
@@ -71,6 +73,18 @@ export class CatRenderer implements IRenderer {
     const ctx = context.ctx;
     ctx.imageSmoothingEnabled = false;
     this.animations[this.getDirectionMap()]?.drawFrame(
-      context.clockTick, ctx, this.movementMgr.getPosition().x, this.movementMgr.getPosition().y, 4);
+      context.clockTick, ctx, this.movementMgr.getPosition().x, this.movementMgr.getPosition().y, this.size.getScale());
+    
+    if (context.debug) {
+      ctx.save();
+      ctx.strokeStyle = "#ff0000";
+      ctx.strokeRect(
+        this.movementMgr.getPosition().x,
+        this.movementMgr.getPosition().y,
+        this.size.getWidth(),
+        this.size.getHeight()
+      );
+      ctx.restore();
+    }
   }
 }

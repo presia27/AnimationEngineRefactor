@@ -61,6 +61,7 @@ export interface IPosition {
  * on the drawing canvas.
  */
 export interface ISize {
+  getScale(): number;
   getWidth(): number;
   getHeight(): number;
 }

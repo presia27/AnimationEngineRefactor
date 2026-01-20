@@ -13,7 +13,7 @@ export function buildBigBlueBox(): IEntity {
   const life = new BasicLifecycle();
   const color = new BlueBoxColor("#00bfff");
   const position = new staticPositionComponent({x: 512, y: 512});
-  const sizeMgr = new BasicSize(48, 48);
+  const sizeMgr = new BasicSize(48, 48, 1);
   const boundingBox = new BoundingBox(position, sizeMgr);
   const collisionHandler = new BlueBoxCollisionHandler(color);
   entity.addComponent(life);

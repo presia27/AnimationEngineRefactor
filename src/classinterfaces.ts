@@ -29,6 +29,7 @@ export interface IRenderer {
 export interface GameContext {
   clockTick: number;
   ctx: CanvasRenderingContext2D;
+  debug: boolean;
 }
 
 /**

@@ -140,7 +140,8 @@ export default class GameEngine {
   public getGameContext(): GameContext {
     return {
       clockTick: this.clockTick,
-      ctx: this.ctx
+      ctx: this.ctx,
+      debug: this.options.debugging
     }
   }
 

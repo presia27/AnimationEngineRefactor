@@ -38,6 +38,10 @@ export class MovementComponent implements IComponent, IPosition {
     return this.position;
   }
 
+  public setPosition(pos: XY): void {
+    this.position = pos;
+  }
+
   public getVelocity(): XY {
     return this.velocity;
   }

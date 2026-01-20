@@ -22,7 +22,7 @@ catImageAssets.filter((asset) => asset.type === "img")
 
 ASSET_MANAGER.downloadAll().then(() => {
 
-  gameEngine.addEntity(buildCat(ASSET_MANAGER, gameEngine.getInputSystem(), {x: 64, y: 64}))
+  gameEngine.addEntity(buildCat(ASSET_MANAGER, gameEngine.getInputSystem(), ctx, {x: 64, y: 64}))
   gameEngine.addEntity(buildBackground());
 
   gameEngine.start();

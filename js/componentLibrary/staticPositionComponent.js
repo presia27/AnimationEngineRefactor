@@ -13,4 +13,7 @@ export class staticPositionComponent {
     getPosition() {
         return this.position;
     }
+    setPosition(pos) {
+        this.position = pos;
+    }
 }

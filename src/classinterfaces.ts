@@ -29,6 +29,7 @@ export interface IComponent {
 
 export interface IPosition {
   getPosition(): XY;
+  setPosition(pos: XY): void;
 }
 
 export interface ILifecycle {

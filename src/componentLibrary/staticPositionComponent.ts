@@ -20,4 +20,8 @@ export class staticPositionComponent implements IComponent, IPosition {
   public getPosition(): XY {
     return this.position;
   }
+
+  public setPosition(pos: XY): void {
+    this.position = pos;
+  }
 }

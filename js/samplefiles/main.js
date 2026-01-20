@@ -18,11 +18,7 @@ catImageAssets.filter((asset) => asset.type === "img")
     ASSET_MANAGER.queueDownload(img.id, img.type, img.location);
 });
 ASSET_MANAGER.downloadAll().then(() => {
-    // catImageAssets.forEach((img) => {
-    //   ASSET_MANAGER.getAsset(img);
-    // });
-    //gameEngine.addEntity(new Cat(ASSET_MANAGER, gameEngine.getGameContext(), gameEngine.getInputSystem(), {x: 64, y: 64}))
-    gameEngine.addEntity(buildCat(ASSET_MANAGER, gameEngine.getInputSystem(), { x: 64, y: 64 }));
+    gameEngine.addEntity(buildCat(ASSET_MANAGER, gameEngine.getInputSystem(), ctx, { x: 64, y: 64 }));
     gameEngine.addEntity(buildBackground());
     gameEngine.start();
 });

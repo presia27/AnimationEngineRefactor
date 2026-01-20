@@ -29,6 +29,9 @@ export class MovementComponent {
     getPosition() {
         return this.position;
     }
+    setPosition(pos) {
+        this.position = pos;
+    }
     getVelocity() {
         return this.velocity;
     }

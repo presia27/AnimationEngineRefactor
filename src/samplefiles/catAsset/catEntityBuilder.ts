@@ -8,6 +8,8 @@ import { CatInputSystem } from "./catinputsys.ts";
 import { CatWrapAround } from "./catWrapAround.ts";
 import { BasicLifecycle } from "../../componentLibrary/lifecycle.ts";
 import { CatRenderer } from "./catRenderer.ts";
+import { BasicSize } from "../../componentLibrary/BasicSize.ts";
+import { BoundingBox } from "../../componentLibrary/boundingBox.ts";
 
 export function buildCat(
   assetManager: AssetManager,
@@ -17,10 +19,14 @@ export function buildCat(
     const catEntity = new Entity();
     const life = new BasicLifecycle();
     const movementCtl = new MovementComponent(defaultXY);
+    const sizeComponent = new BasicSize(25, 25); // FIXME use a dynamic version instead
+    const boundingBox = new BoundingBox(movementCtl, sizeComponent);
     const catInputCtl = new CatInputSystem(inputSystem, movementCtl, 200);
     const catWrapAroundCtl = new CatWrapAround(movementCtl, ctx);
     catEntity.addComponent(life);
     catEntity.addComponent(movementCtl);
+    catEntity.addComponent(sizeComponent);
+    catEntity.addComponent(boundingBox);
     catEntity.addComponent(catInputCtl);
     catEntity.addComponent(catWrapAroundCtl);
 

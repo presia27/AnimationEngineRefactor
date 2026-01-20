@@ -5,6 +5,7 @@ import { catImageAssets } from "./assetlist.js";
 import { myInputMap } from "./inputmap.js";
 import { buildCat } from "./catAsset/catEntityBuilder.js";
 import { buildBackground } from "./backgroundObjects/backgroundEntityBuilder.js";
+import { buildBigBlueBox } from "./bigBlueBox/blueBoxEntityBuilder.js";
 const canvas = document.getElementById("gameWorld");
 const ctx = canvas === null || canvas === void 0 ? void 0 : canvas.getContext("2d");
 if (ctx === null || ctx === undefined) {
@@ -18,7 +19,13 @@ catImageAssets.filter((asset) => asset.type === "img")
     ASSET_MANAGER.queueDownload(img.id, img.type, img.location);
 });
 ASSET_MANAGER.downloadAll().then(() => {
-    gameEngine.addEntity(buildCat(ASSET_MANAGER, gameEngine.getInputSystem(), ctx, { x: 64, y: 64 }));
+    // Create new instances of entities and add them to the game engine and collision system
+    const cat = buildCat(ASSET_MANAGER, gameEngine.getInputSystem(), ctx, { x: 64, y: 64 });
+    const blueBox = buildBigBlueBox();
+    gameEngine.addEntity(cat);
+    gameEngine.getCollisionSystem().addEntity(cat);
+    gameEngine.addEntity(blueBox);
+    gameEngine.getCollisionSystem().addEntity(blueBox);
     gameEngine.addEntity(buildBackground());
     gameEngine.start();
 });

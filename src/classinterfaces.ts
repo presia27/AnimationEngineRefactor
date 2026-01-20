@@ -56,6 +56,9 @@ export interface IPosition {
 /**
  * Component which stores and
  * manages the size of an entity
+ * where its size describes the
+ * entity's physical composition
+ * on the drawing canvas.
  */
 export interface ISize {
   getWidth(): number;

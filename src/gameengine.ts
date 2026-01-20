@@ -10,11 +10,13 @@ import { Timer } from "./timer.ts";
 import { InputSystem } from "./inputsys.ts";
 import { InputMapValue } from "./typeinterfaces.ts";
 import { BasicLifecycle } from "./componentLibrary/lifecycle.ts";
+import { CollisionSystem } from "./collisionsys.ts";
 
 export default class GameEngine {
   private running: boolean;
   private ctx: CanvasRenderingContext2D;
   private inputSystem: InputSystem;
+  private collisionSystem: CollisionSystem;
   private inputMap: InputMapValue[]; // maps input values to actions
   private timer: Timer;
   private clockTick: number; // elapsed time in seconds since the last clock tick
@@ -49,6 +51,7 @@ export default class GameEngine {
     // Start Input
     this.inputMap = inputMap;
     this.inputSystem = new InputSystem(ctx, inputMap, this.options.debugging);
+    this.collisionSystem = new CollisionSystem();
   };
 
   /**
@@ -96,22 +99,6 @@ export default class GameEngine {
   private update() {
     this.inputSystem.onFrameUpdate();
 
-    // let entitiesCount = this.entities.length;
-
-    // for (let i = 0; i < entitiesCount; i++) {
-    //     let entity = this.entities[i];
-
-    //     if (entity && !entity.removeFromWorld()) {
-    //         entity.update(this.getGameContext());
-    //     }
-    // }
-
-    // for (let i = this.entities.length - 1; i >= 0; --i) {
-    //     if (this.entities[i]?.removeFromWorld()) {
-    //         this.entities.splice(i, 1);
-    //     }
-    // }
-
     this.entities = this.entities.filter((entity) => {
       const lifecycle = entity.getComponent(BasicLifecycle);
       return !lifecycle || lifecycle.isAlive();
@@ -119,7 +106,9 @@ export default class GameEngine {
 
     this.entities.forEach((entity) => {
       entity.update(this.getGameContext());
-    })
+    });
+
+    this.collisionSystem.checkCollisions();
   };
 
   private loop() {
@@ -151,6 +140,10 @@ export default class GameEngine {
    */
   public getInputSystem(): InputSystem {
     return this.inputSystem;
+  }
+
+  public getCollisionSystem(): CollisionSystem {
+    return this.collisionSystem;
   }
 
 };

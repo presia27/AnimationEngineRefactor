@@ -7,6 +7,7 @@
 import { Timer } from "./timer.js";
 import { InputSystem } from "./inputsys.js";
 import { BasicLifecycle } from "./componentLibrary/lifecycle.js";
+import { CollisionSystem } from "./collisionsys.js";
 export default class GameEngine {
     /**
      *
@@ -30,6 +31,7 @@ export default class GameEngine {
         // Start Input
         this.inputMap = inputMap;
         this.inputSystem = new InputSystem(ctx, inputMap, this.options.debugging);
+        this.collisionSystem = new CollisionSystem();
     }
     ;
     /**
@@ -76,18 +78,6 @@ export default class GameEngine {
     ;
     update() {
         this.inputSystem.onFrameUpdate();
-        // let entitiesCount = this.entities.length;
-        // for (let i = 0; i < entitiesCount; i++) {
-        //     let entity = this.entities[i];
-        //     if (entity && !entity.removeFromWorld()) {
-        //         entity.update(this.getGameContext());
-        //     }
-        // }
-        // for (let i = this.entities.length - 1; i >= 0; --i) {
-        //     if (this.entities[i]?.removeFromWorld()) {
-        //         this.entities.splice(i, 1);
-        //     }
-        // }
         this.entities = this.entities.filter((entity) => {
             const lifecycle = entity.getComponent(BasicLifecycle);
             return !lifecycle || lifecycle.isAlive();
@@ -95,6 +85,7 @@ export default class GameEngine {
         this.entities.forEach((entity) => {
             entity.update(this.getGameContext());
         });
+        this.collisionSystem.checkCollisions();
     }
     ;
     loop() {
@@ -114,7 +105,8 @@ export default class GameEngine {
     getGameContext() {
         return {
             clockTick: this.clockTick,
-            ctx: this.ctx
+            ctx: this.ctx,
+            debug: this.options.debugging
         };
     }
     /**
@@ -123,6 +115,9 @@ export default class GameEngine {
      */
     getInputSystem() {
         return this.inputSystem;
+    }
+    getCollisionSystem() {
+        return this.collisionSystem;
     }
 }
 ;

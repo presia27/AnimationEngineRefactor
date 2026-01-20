@@ -3,18 +3,24 @@ import { BoundingBox } from "../../componentLibrary/boundingBox.js";
 import { BasicLifecycle } from "../../componentLibrary/lifecycle.js";
 import { staticPositionComponent } from "../../componentLibrary/staticPositionComponent.js";
 import { Entity } from "../../entity.js";
+import { BlueBoxCollisionHandler } from "./blueBoxCollisionHandler.js";
+import { BlueBoxColor } from "./blueBoxColorChip.js";
 import { BlueBoxRenderer } from "./blueBoxRenderer.js";
 export function buildBigBlueBox() {
     const entity = new Entity();
     const life = new BasicLifecycle();
+    const color = new BlueBoxColor("#00bfff");
     const position = new staticPositionComponent({ x: 512, y: 512 });
     const sizeMgr = new BasicSize(48, 48);
     const boundingBox = new BoundingBox(position, sizeMgr);
+    const collisionHandler = new BlueBoxCollisionHandler(color);
     entity.addComponent(life);
+    entity.addComponent(color);
     entity.addComponent(position);
     entity.addComponent(sizeMgr);
     entity.addComponent(boundingBox);
-    const renderer = new BlueBoxRenderer(position, sizeMgr);
+    entity.addComponent(collisionHandler);
+    const renderer = new BlueBoxRenderer(position, sizeMgr, color);
     entity.setRenderer(renderer);
     return entity;
 }

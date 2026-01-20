@@ -1,10 +1,11 @@
-import { GameContext, IComponent, IPosition } from "../classinterfaces.ts";
+import { GameContext, IComponent, IPosition, ISize } from "../classinterfaces.ts";
 
 /**
  * 
  */
 export class BoundingBox implements IComponent {
   private positionMgr: IPosition;
+  private sizeMgr: ISize;
   private left: number;
   private top: number;
   private right: number;
@@ -18,17 +19,20 @@ export class BoundingBox implements IComponent {
    * @param height Initial height
    * @param positionMgr Component that holds the current X-Y position of an entity
    */
-  constructor(x: number, y: number, width: number, height: number, positionMgr: IPosition) {
-   this.left = x;
-   this.top = y;
-   this.right = this.left + width;
-   this.bottom = this.top + height; 
+  constructor(positionMgr: IPosition, sizeMgr: ISize) {
+   this.left = positionMgr.getPosition().x;
+   this.top = positionMgr.getPosition().y;
+   this.right = this.left + sizeMgr.getWidth();
+   this.bottom = this.top + sizeMgr.getHeight(); 
    this.positionMgr = positionMgr;
+   this.sizeMgr = sizeMgr;
   }
 
   public update(context: GameContext): void {
     this.left = this.positionMgr.getPosition().x;
     this.top = this.positionMgr.getPosition().y;
+    this.right = this.left + this.sizeMgr.getWidth();
+    this.bottom = this.top + this.sizeMgr.getHeight();
   }
 
   public getLeft(): number {

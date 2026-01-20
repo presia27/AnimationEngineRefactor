@@ -54,6 +54,15 @@ export interface IPosition {
 }
 
 /**
+ * Component which stores and
+ * manages the size of an entity
+ */
+export interface ISize {
+  getWidth(): number;
+  getHeight(): number;
+}
+
+/**
  * Interface for components
  * representing the life state of
  * an entity (whether it is alive or not).

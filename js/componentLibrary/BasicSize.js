@@ -7,8 +7,8 @@
 export class BasicSize {
     constructor(width, height, scale) {
         this.scale = scale;
-        this.width = width * scale;
-        this.height = height * scale;
+        this.width = width;
+        this.height = height;
     }
     update(context) {
         return;
@@ -17,9 +17,9 @@ export class BasicSize {
         return this.scale;
     }
     getWidth() {
-        return this.width;
+        return this.width * this.scale;
     }
     getHeight() {
-        return this.height;
+        return this.height * this.scale;
     }
 }

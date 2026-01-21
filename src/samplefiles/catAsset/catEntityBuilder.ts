@@ -8,10 +8,10 @@ import { CatInputSystem } from "./catinputsys.ts";
 import { CatWrapAround } from "./catWrapAround.ts";
 import { BasicLifecycle } from "../../componentLibrary/lifecycle.ts";
 import { CatRenderer } from "./catRenderer.ts";
-import { BasicSize } from "../../componentLibrary/BasicSize.ts";
 import { BoundingBox } from "../../componentLibrary/boundingBox.ts";
 import { CatTagFile } from "./catTagFile.ts";
 import { CatCollisionHandler } from "./catCollisionHandler.ts";
+import { CatSizeOrientation } from "./catSizeOrientation.ts";
 
 export function buildCat(
   assetManager: AssetManager,
@@ -22,9 +22,9 @@ export function buildCat(
     const tagFile = new CatTagFile();
     const life = new BasicLifecycle();
     const movementCtl = new MovementComponent(defaultXY);
-    const sizeComponent = new BasicSize(25, 25, 4); // FIXME use a dynamic version instead
+    const sizeComponent = new CatSizeOrientation(25, 25, 4); // FIXME use a dynamic version instead
     const boundingBox = new BoundingBox(movementCtl, sizeComponent);
-    const catInputCtl = new CatInputSystem(inputSystem, movementCtl, 200);
+    const catInputCtl = new CatInputSystem(inputSystem, movementCtl, sizeComponent, 200);
     const catWrapAroundCtl = new CatWrapAround(movementCtl, ctx);
     const catCollisionHandler = new CatCollisionHandler(boundingBox, movementCtl, sizeComponent);
     catEntity.addComponent(tagFile);

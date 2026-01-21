@@ -1,8 +1,9 @@
 import { InputAction } from "../../inputactionlist.js";
 export class CatInputSystem {
-    constructor(inputSys, movementSys, speed) {
+    constructor(inputSys, movementSys, size, speed) {
         this.inputSystem = inputSys;
         this.movementSystem = movementSys;
+        this.catSize = size;
         this.speed = speed;
     }
     update(context) {
@@ -19,6 +20,7 @@ export class CatInputSystem {
         if (this.inputSystem.isActionActive(InputAction.MOVE_RIGHT)) {
             direction.x += 1;
         }
+        this.catSize.setDirectionIntent(direction);
         const magnitude = Math.sqrt(direction.x ** 2 + direction.y ** 2);
         if (magnitude > 0) {
             // normalize movement by dividing out the magnitude, leaving only a direction vector

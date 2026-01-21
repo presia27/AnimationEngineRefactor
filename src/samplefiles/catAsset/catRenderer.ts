@@ -3,29 +3,18 @@ import { Animator } from "../../animator.ts";
 import { GameContext, IRenderer, ISize } from "../../classinterfaces.ts";
 import { BasicLifecycle } from "../../componentLibrary/lifecycle.ts";
 import AssetManager from "../../assetmanager.ts";
+import { CatSizeOrientation, Direction } from "./catSizeOrientation.ts";
 
 const catSpriteName = "catSprite";
-
-enum Direction {
-  UPLEFT = 0,
-  UP = 1,
-  UPRIGHT = 2,
-  LEFT = 3,
-  IDLE = 4,
-  RIGHT = 5,
-  DOWNLEFT = 6,
-  DOWN = 7,
-  DOWNRIGHT = 8
-}
 
 export class CatRenderer implements IRenderer {
   spritesheet: HTMLImageElement;
   animations: Animator[];
   movementMgr: MovementComponent;
   lifeMgr: BasicLifecycle;
-  size: ISize;
+  size: CatSizeOrientation;
 
-  constructor(assetManager: AssetManager, movementMgr: MovementComponent, lifeMgr: BasicLifecycle, size: ISize) {
+  constructor(assetManager: AssetManager, movementMgr: MovementComponent, lifeMgr: BasicLifecycle, size: CatSizeOrientation) {
     this.movementMgr = movementMgr;
     this.lifeMgr = lifeMgr;
     this.size = size;
@@ -53,26 +42,26 @@ export class CatRenderer implements IRenderer {
     this.animations.push(new Animator(this.spritesheet, 99, 71, 25, 25, 3, 0.15, 7, false, true, false)); // downright  
   }
 
-  private getDirectionMap(): Direction {
-    const degrees = this.movementMgr.getCurrentDirectionDegrees();
-    const speed = this.movementMgr.getSpeed();
-    if (speed === 0) return Direction.IDLE;
+  // private getDirectionMap(): Direction {
+  //   const degrees = this.movementMgr.getCurrentDirectionDegrees();
+  //   const speed = this.movementMgr.getSpeed();
+  //   if (speed === 0) return Direction.IDLE;
     
-    if (degrees >= -22.5 && degrees < 22.5) return Direction.RIGHT;
-    else if (degrees >= 22.5 && degrees < 67.5) return Direction.DOWNRIGHT;
-    else if (degrees >= 67.5 && degrees < 112.5) return Direction.DOWN;
-    else if (degrees >= 112.5 && degrees < 157.5) return Direction.DOWNLEFT;
-    else if (degrees >= 157.5 || degrees < -157.5) return Direction.LEFT;
-    else if (degrees >= -157.5 && degrees < -112.5) return Direction.UPLEFT;
-    else if (degrees >= -112.5 && degrees < -67.5) return Direction.UP;
-    else if (degrees >= -67.5 && degrees < -22.5) return Direction.UPRIGHT;
-    else return Direction.IDLE;
-  }
+  //   if (degrees >= -22.5 && degrees < 22.5) return Direction.RIGHT;
+  //   else if (degrees >= 22.5 && degrees < 67.5) return Direction.DOWNRIGHT;
+  //   else if (degrees >= 67.5 && degrees < 112.5) return Direction.DOWN;
+  //   else if (degrees >= 112.5 && degrees < 157.5) return Direction.DOWNLEFT;
+  //   else if (degrees >= 157.5 || degrees < -157.5) return Direction.LEFT;
+  //   else if (degrees >= -157.5 && degrees < -112.5) return Direction.UPLEFT;
+  //   else if (degrees >= -112.5 && degrees < -67.5) return Direction.UP;
+  //   else if (degrees >= -67.5 && degrees < -22.5) return Direction.UPRIGHT;
+  //   else return Direction.IDLE;
+  // }
 
   public draw(context: GameContext): void {
     const ctx = context.ctx;
     ctx.imageSmoothingEnabled = false;
-    this.animations[this.getDirectionMap()]?.drawFrame(
+    this.animations[this.size.getDirectionMap()]?.drawFrame(
       context.clockTick, ctx, this.movementMgr.getPosition().x, this.movementMgr.getPosition().y, this.size.getScale());
     
     if (context.debug) {

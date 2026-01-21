@@ -3,15 +3,18 @@ import { GameContext, IComponent } from "../../classinterfaces.ts";
 import { InputSystem } from "../../inputsys.ts";
 import { XY } from "../../typeinterfaces.ts";
 import { InputAction } from "../../inputactionlist.ts";
+import { CatSizeOrientation } from "./catSizeOrientation.ts";
 
 export class CatInputSystem implements IComponent {
   inputSystem: InputSystem;
   movementSystem: MovementComponent;
+  catSize: CatSizeOrientation;
   speed: number
 
-  constructor(inputSys: InputSystem, movementSys: MovementComponent, speed: number) {
+  constructor(inputSys: InputSystem, movementSys: MovementComponent, size: CatSizeOrientation, speed: number) {
     this.inputSystem = inputSys;
     this.movementSystem = movementSys;
+    this.catSize = size;
     this.speed = speed;
   }
 
@@ -30,6 +33,8 @@ export class CatInputSystem implements IComponent {
     if (this.inputSystem.isActionActive(InputAction.MOVE_RIGHT)) {
       direction.x += 1;
     }
+
+    this.catSize.setDirectionIntent(direction);
 
     const magnitude = Math.sqrt(direction.x ** 2 + direction.y ** 2);
     if (magnitude > 0) {

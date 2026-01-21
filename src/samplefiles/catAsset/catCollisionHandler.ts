@@ -91,6 +91,21 @@ export class CatCollisionHandler extends AbstractCollisionHandler {
           magnitude: this.movementCtl.getSpeed()
         });
       }
+      else {
+        // fallback for any other case
+        this.movementCtl.setPosition({
+          x: othBB.getLeft() - this.sizeCtl.getWidth(),
+          y: this.movementCtl.getPosition().y
+        });
+
+        this.movementCtl.setVelocityCommand({
+          direction: {
+            x: 0,
+            y: this.movementCtl.getCurrentDirection().y
+          },
+          magnitude: this.movementCtl.getSpeed()
+        });
+      }
     }
   }
 }

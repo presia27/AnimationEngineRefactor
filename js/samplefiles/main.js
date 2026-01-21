@@ -21,11 +21,14 @@ catImageAssets.filter((asset) => asset.type === "img")
 ASSET_MANAGER.downloadAll().then(() => {
     // Create new instances of entities and add them to the game engine and collision system
     const cat = buildCat(ASSET_MANAGER, gameEngine.getInputSystem(), ctx, { x: 64, y: 64 });
-    const blueBox = buildBigBlueBox();
+    const blueBox = buildBigBlueBox({ x: 256, y: 256 });
+    const blueBox2 = buildBigBlueBox({ x: 512, y: 512 });
     gameEngine.addEntity(cat);
     gameEngine.getCollisionSystem().addEntity(cat);
     gameEngine.addEntity(blueBox);
     gameEngine.getCollisionSystem().addEntity(blueBox);
+    gameEngine.addEntity(blueBox2);
+    gameEngine.getCollisionSystem().addEntity(blueBox2);
     gameEngine.addEntity(buildBackground());
     gameEngine.start();
 });

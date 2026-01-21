@@ -4,17 +4,18 @@ import { BoundingBox } from "../../componentLibrary/boundingBox.ts";
 import { BasicLifecycle } from "../../componentLibrary/lifecycle.ts";
 import { staticPositionComponent } from "../../componentLibrary/staticPositionComponent.ts";
 import { Entity } from "../../entity.ts";
+import { XY } from "../../typeinterfaces.ts";
 import { BlueBoxCollisionHandler } from "./blueBoxCollisionHandler.ts";
 import { BlueBoxColor } from "./blueBoxColorChip.ts";
 import { BlueBoxRenderer } from "./blueBoxRenderer.ts";
 import { BlueBoxTagFile } from "./blueBoxTagFile.ts";
 
-export function buildBigBlueBox(): IEntity {
+export function buildBigBlueBox(initXY: XY): IEntity {
   const entity = new Entity();
   const tagFile = new BlueBoxTagFile();
   const life = new BasicLifecycle();
   const color = new BlueBoxColor("#00bfff");
-  const position = new staticPositionComponent({x: 512, y: 512});
+  const position = new staticPositionComponent(initXY);
   const sizeMgr = new BasicSize(48, 48, 1);
   const boundingBox = new BoundingBox(position, sizeMgr);
   const collisionHandler = new BlueBoxCollisionHandler(color);

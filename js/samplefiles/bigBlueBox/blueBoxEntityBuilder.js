@@ -7,12 +7,12 @@ import { BlueBoxCollisionHandler } from "./blueBoxCollisionHandler.js";
 import { BlueBoxColor } from "./blueBoxColorChip.js";
 import { BlueBoxRenderer } from "./blueBoxRenderer.js";
 import { BlueBoxTagFile } from "./blueBoxTagFile.js";
-export function buildBigBlueBox() {
+export function buildBigBlueBox(initXY) {
     const entity = new Entity();
     const tagFile = new BlueBoxTagFile();
     const life = new BasicLifecycle();
     const color = new BlueBoxColor("#00bfff");
-    const position = new staticPositionComponent({ x: 512, y: 512 });
+    const position = new staticPositionComponent(initXY);
     const sizeMgr = new BasicSize(48, 48, 1);
     const boundingBox = new BoundingBox(position, sizeMgr);
     const collisionHandler = new BlueBoxCollisionHandler(color);
